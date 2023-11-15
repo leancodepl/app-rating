@@ -4,6 +4,7 @@
     <Authors>LeanCode</Authors>
     <Description>LeanCode AppRating</Description>
 
+    <Nullable>enable</Nullable>
     <LangVersion>preview</LangVersion>
     <OutputType>library</OutputType>
     <TargetFramework>net8.0</TargetFramework>

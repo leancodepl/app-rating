@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B064771B-94C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeanCode.AppRating.Contracts", "src\LeanCode.AppRating.Contracts\LeanCode.AppRating.Contracts.csproj", "{1D2F7D13-C795-442D-BA47-9B39C5600A4C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeanCode.AppRating", "src\LeanCode.AppRating\LeanCode.AppRating.csproj", "{40981EB9-9E59-4343-80B8-6018756292F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +22,13 @@ Global
 		{1D2F7D13-C795-442D-BA47-9B39C5600A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D2F7D13-C795-442D-BA47-9B39C5600A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D2F7D13-C795-442D-BA47-9B39C5600A4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40981EB9-9E59-4343-80B8-6018756292F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40981EB9-9E59-4343-80B8-6018756292F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40981EB9-9E59-4343-80B8-6018756292F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40981EB9-9E59-4343-80B8-6018756292F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1D2F7D13-C795-442D-BA47-9B39C5600A4C} = {B064771B-94C3-4381-A71A-7A87430A4944}
+		{40981EB9-9E59-4343-80B8-6018756292F9} = {B064771B-94C3-4381-A71A-7A87430A4944}
 	EndGlobalSection
 EndGlobal
