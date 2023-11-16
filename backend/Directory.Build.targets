@@ -1,0 +1,33 @@
+<Project>
+  <PropertyGroup>
+    <CoreLibVersion>8.0.2260-preview</CoreLibVersion>
+    <EFCoreVersion>8.0.0</EFCoreVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Update="LeanCode.Contracts" Version="2.0.0-preview.3" />
+
+    <PackageReference Update="LeanCode.Components"  Version="$(CoreLibVersion)" />
+    <PackageReference Update="LeanCode.CQRS.AspNetCore" Version="$(CoreLibVersion)" />
+    <PackageReference Update="LeanCode.CQRS.Execution" Version="$(CoreLibVersion)" />
+    <PackageReference Update="LeanCode.CQRS.Validation.Fluent" Version="$(CoreLibVersion)" />
+    <PackageReference Update="LeanCode.TimeProvider" Version="$(CoreLibVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FluentValidation" Version="11.5.1" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore" Version="$(EFCoreVersion)" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="$(EFCoreVersion)" />
+    <PackageReference Update="Serilog" Version="3.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="SerilogAnalyzer" Version="0.15.0" />
+    <PackageReference Update="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)AppRating.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+</Project>
