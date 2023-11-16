@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using LeanCode.Contracts;
 using LeanCode.Contracts.Security;
 
@@ -13,10 +12,8 @@ public class SubmitAppRating : ICommand
     public string SystemVersion { get; set; }
     public string AppVersion { get; set; }
 
-    [SuppressMessage("?", "CA2227", Justification = "Part of the contract")]
     public Dictionary<string, object>? Metadata { get; set; }
 
-    [SuppressMessage("?", "CA1034", Justification = "Convention for error codes")]
     public static class ErrorCodes
     {
         public const int RatingInvalid = 1;
