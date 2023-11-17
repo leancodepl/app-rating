@@ -1,0 +1,163 @@
+name: AppRating Build, Test & Publish
+
+on:
+  push:
+    branches: [ main ]
+    tags-ignore: [ "*-v*" ]
+    paths:
+      - "backend/**"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "backend/**"
+  workflow_dispatch:
+
+jobs:
+  ci:
+    name: Build, Test & Publish
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    services:
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          ACCEPT_EULA: Y
+          MSSQL_SA_PASSWORD: Passw12#
+        ports:
+          - "1433:1433"
+    env:
+      DOTNET_VERSION: 8.0
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Version
+        id: version
+        run: |
+          BRANCH=${GITHUB_REF#refs/*/}
+          if [[ $BRANCH == "main" ]]
+          then
+            BUILD_NUMBER=$GITHUB_RUN_NUMBER
+            VERSION="1.0.${BUILD_NUMBER}"
+            PUBLISH_ARTIFACTS=1
+          else
+            VERSION="0.0.0"
+            PUBLISH_ARTIFACTS=0
+          fi
+          echo Building on "$BRANCH"
+          echo Building version: "$VERSION"
+
+          if [[ $GITHUB_EVENT_NAME == "workflow_dispatch" ]]
+          then
+            echo "Packages will be published to NuGet"
+            PUBLISH_NUGET=1
+          else
+            PUBLISH_NUGET=0
+          fi
+
+          if [[ $PUBLISH_ARTIFACTS == 0 && $PUBLISH_NUGET == 1 ]]
+          then
+            echo "Only vX.Y branches can be published to NuGet, failing"
+            exit 1
+          fi
+
+          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
+          echo "publish_artifacts=${PUBLISH_ARTIFACTS}" >> "${GITHUB_OUTPUT}"
+          echo "publish_nuget=${PUBLISH_NUGET}" >> "${GITHUB_OUTPUT}"
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      - name: Restore
+        run: dotnet restore
+      - name: Tool Restore
+        run: dotnet tool restore
+      - name: Check formatting
+        run: dotnet csharpier . --check
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test
+        run: dotnet msbuild -t:RunTests -p:Configuration=Release -p:LogFileName="$PWD/../TestResults/tests.trx"
+        working-directory: ./backend/tests
+      - name: Integration test
+        run: |
+          dotnet test \
+          ./tests/LeanCode.AppRating.IntegrationTests/LeanCode.AppRating.IntegrationTests.csproj \
+          --no-build \
+          --logger "trx;LogFileName=LeanCode.AppRating.IntegrationTests.trx" \
+          --results-directory TestResults
+        env:
+          SqlServer__ConnectionStringBase: Server=localhost,1433;User Id=sa;Password=Passw12#;Encrypt=false
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test_results.zip
+          path: backend/TestResults/*.trx
+      - name: Pack AppRating Contracts
+        if: ${{ needs.prepare.outputs.publish_artifacts == '1' }}
+        env:
+          BUILD_VERSION: ${{ steps.version.outputs.version }}
+        run: dotnet pack --no-build -c Release -p:Version=$BUILD_VERSION
+        working-directory: ./backend/src/LeanCode.AppRating.Contracts
+      - name: Pack AppRating
+        if: ${{ needs.prepare.outputs.publish_artifacts == '1' }}
+        env:
+          BUILD_VERSION: ${{ steps.version.outputs.version }}
+        run: dotnet pack --no-build -c Release -p:Version=$BUILD_VERSION
+        working-directory: ./backend/src/LeanCode.AppRating
+      - name: Publish to Feedz
+        if: ${{ needs.prepare.outputs.publish_artifacts == '1' }}
+        run: |
+          dotnet nuget push \
+            "src/LeanCode.AppRating.Contracts/bin/Release/LeanCode.AppRating.Contracts.${BUILD_VERSION}.nupkg" \
+            "src/LeanCode.AppRating/bin/Release/LeanCode.AppRating.${BUILD_VERSION}.nupkg" \
+            -k "$FEEDZ_API_KEY" \
+            -s 'https://f.feedz.io/leancode/public/nuget/index.json' \
+            -n
+        env:
+          BUILD_VERSION: ${{ steps.version.outputs.version }}
+          FEEDZ_API_KEY: ${{ secrets.FEEDZ_API_KEY }}
+      - name: Publish to Nuget
+        if: ${{ needs.prepare.outputs.publish_nuget == '1' }}
+        run: |
+          dotnet nuget push \
+            "src/LeanCode.AppRating.Contracts/bin/Release/LeanCode.AppRating.Contracts.${BUILD_VERSION}.nupkg" \
+            "src/LeanCode.AppRating/bin/Release/LeanCode.AppRating.${BUILD_VERSION}.nupkg" \
+            -k "$NUGET_API_KEY" \
+            -s 'https://api.nuget.org/v3/index.json' \
+            -n
+        env:
+          BUILD_VERSION: ${{ steps.version.outputs.version }}
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+
+  publish-test-results:
+    name: Publish Tests Results
+    needs: ci
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
+    if: always()
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+      - name: Extract Artifacts
+        run: |
+          for file in artifacts/*.zip; do
+            if [[ -f "$file" ]]; then
+              dir="${file%.zip}"
+              mkdir -p "$dir"
+              unzip -d "$dir" "$file"
+            fi
+          done
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          trx_files: "artifacts/*/**/*.trx"
