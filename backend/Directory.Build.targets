@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <CoreLibVersion>8.0.2260-preview</CoreLibVersion>
+    <CoreLibVersion>8.0.2305-preview</CoreLibVersion>
     <EFCoreVersion>8.0.0</EFCoreVersion>
   </PropertyGroup>
 

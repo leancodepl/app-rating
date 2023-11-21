@@ -1,8 +1,10 @@
+using System.Reflection;
+using FluentValidation;
 using LeanCode.AppRating.Contracts;
 using LeanCode.AppRating.CQRS;
 using LeanCode.AppRating.DataAccess;
-using LeanCode.Components;
 using LeanCode.CQRS.AspNetCore;
+using LeanCode.CQRS.Validation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,11 +20,12 @@ public static class CQRSServicesBuilderExtensions
         where TUserIdExtractor : class, IUserIdExtractor<TUserId>
     {
         cqrsServicesBuilder.Services.AddTransient<IAppRatingStore<TUserId>>(sp => sp.GetRequiredService<TDbContext>());
-        cqrsServicesBuilder.Services.AddSingleton<TUserIdExtractor>();
+        cqrsServicesBuilder.Services.AddSingleton<IUserIdExtractor<TUserId>, TUserIdExtractor>();
 
-        return cqrsServicesBuilder.AddCQRSObjects(
-            TypesCatalog.Of<SubmitAppRating>(),
-            TypesCatalog.Of<SubmitAppRatingCH<TUserId>>()
-        );
+        cqrsServicesBuilder.Services.AddTransient<IValidator<SubmitAppRating>, SubmitAppRatingCV>();
+
+        return cqrsServicesBuilder
+            .AddCommand<SubmitAppRating, SubmitAppRatingCH<TUserId>>()
+            .AddQuery<RatingAlreadySent, bool, RatingAlreadySentQH<TUserId>>();
     }
 }
