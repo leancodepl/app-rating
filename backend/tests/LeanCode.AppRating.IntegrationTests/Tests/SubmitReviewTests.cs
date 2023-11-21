@@ -1,6 +1,7 @@
 using FluentAssertions;
 using LeanCode.AppRating.Contracts;
 using LeanCode.AppRating.IntegrationTests;
+using LeanCode.AppRating.IntegrationTests.Helpers;
 using Xunit;
 
 namespace LeanCode.NotificationCenter.IntegrationTests.Tests;
@@ -10,19 +11,33 @@ public class SubmitReviewTests : TestBase
     [Fact]
     public async Task Review_is_submitted_correctly()
     {
-        (await Query.GetAsync(new RatingAlreadySent { })).Should().BeFalse();
+        await Check_if_user_has_no_review_on_default();
 
-        var result = await Command.RunAsync(new SubmitAppRating { AdditionalComment = new string('a', 4001), });
+        await Ensure_the_comment_max_length_is_validated();
 
-        result.WasSuccessful.Should().BeFalse();
+        await Submit_correct_review();
 
-        result
-            .ValidationErrors
-            .Should()
-            .ContainEquivalentOf(new { ErrorCode = SubmitAppRating.ErrorCodes.AdditionalCommentTooLong });
+        await Check_if_user_has_submitted_review();
 
-        (
-            await Command.RunAsync(
+        await Ensure_that_metadata_is_accepted_correctly();
+
+        async Task Check_if_user_has_no_review_on_default()
+        {
+            var alreadySentRating = await Query.GetAsync(new RatingAlreadySent { });
+            alreadySentRating.Should().BeFalse();
+        }
+
+        async Task Ensure_the_comment_max_length_is_validated()
+        {
+            await Command.RunFailureAsync(
+                new SubmitAppRating { AdditionalComment = new string('a', 4001), },
+                SubmitAppRating.ErrorCodes.AdditionalCommentTooLong
+            );
+        }
+
+        async Task Submit_correct_review()
+        {
+            await Command.RunSuccessAsync(
                 new SubmitAppRating
                 {
                     Rating = 5.0,
@@ -31,13 +46,18 @@ public class SubmitReviewTests : TestBase
                     Platform = PlatformDTO.Android,
                     SystemVersion = "14",
                 }
-            )
-        ).WasSuccessful.Should().BeTrue();
+            );
+        }
 
-        (await Query.GetAsync(new RatingAlreadySent { })).Should().BeTrue();
+        async Task Check_if_user_has_submitted_review()
+        {
+            var alreadySentRating = await Query.GetAsync(new RatingAlreadySent { });
+            alreadySentRating.Should().BeTrue();
+        }
 
-        (
-            await Command.RunAsync(
+        async Task Ensure_that_metadata_is_accepted_correctly()
+        {
+            await Command.RunSuccessAsync(
                 new SubmitAppRating
                 {
                     Rating = 5.0,
@@ -52,7 +72,7 @@ public class SubmitReviewTests : TestBase
                         ["foo3"] = new { some = "object" },
                     }
                 }
-            )
-        ).WasSuccessful.Should().BeTrue();
+            );
+        }
     }
 }
