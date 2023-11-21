@@ -11,68 +11,66 @@ public class SubmitReviewTests : TestBase
     [Fact]
     public async Task Review_is_submitted_correctly()
     {
-        await Check_if_user_has_no_review_on_default();
+        var alreadySentRating = await UserAlreadySentRating();
+        alreadySentRating.Should().BeFalse();
 
-        await Ensure_the_comment_max_length_is_validated();
+        await EnsureValidationWorks();
 
-        await Submit_correct_review();
+        await SubmitCorrectReview();
 
-        await Check_if_user_has_submitted_review();
+        alreadySentRating = await UserAlreadySentRating();
+        alreadySentRating.Should().BeTrue();
 
-        await Ensure_that_metadata_is_accepted_correctly();
+        await EnsureThatMetadataIsAcceptedCorrectly();
+    }
 
-        async Task Check_if_user_has_no_review_on_default()
-        {
-            var alreadySentRating = await Query.GetAsync(new RatingAlreadySent { });
-            alreadySentRating.Should().BeFalse();
-        }
-
-        async Task Ensure_the_comment_max_length_is_validated()
-        {
-            await Command.RunFailureAsync(
-                new SubmitAppRating { AdditionalComment = new string('a', 4001), },
-                SubmitAppRating.ErrorCodes.AdditionalCommentTooLong
-            );
-        }
-
-        async Task Submit_correct_review()
-        {
-            await Command.RunSuccessAsync(
-                new SubmitAppRating
+    private async Task EnsureThatMetadataIsAcceptedCorrectly()
+    {
+        await Command.RunSuccessAsync(
+            new SubmitAppRating
+            {
+                Rating = 5.0,
+                AdditionalComment = null,
+                AppVersion = "1.23.456",
+                Platform = PlatformDTO.Android,
+                SystemVersion = "14",
+                Metadata = new Dictionary<string, object>()
                 {
-                    Rating = 5.0,
-                    AdditionalComment = new string('a', 200),
-                    AppVersion = "1.23.456",
-                    Platform = PlatformDTO.Android,
-                    SystemVersion = "14",
+                    ["foo"] = "bar",
+                    ["foo2"] = new string[] { "baba1", "baba2" },
+                    ["foo3"] = new { some = "object" },
                 }
-            );
-        }
+            }
+        );
+    }
 
-        async Task Check_if_user_has_submitted_review()
-        {
-            var alreadySentRating = await Query.GetAsync(new RatingAlreadySent { });
-            alreadySentRating.Should().BeTrue();
-        }
+    private async Task SubmitCorrectReview()
+    {
+        await Command.RunSuccessAsync(
+            new SubmitAppRating
+            {
+                Rating = 5.0,
+                AdditionalComment = new string('a', 200),
+                AppVersion = "1.23.456",
+                Platform = PlatformDTO.Android,
+                SystemVersion = "14",
+            }
+        );
+    }
 
-        async Task Ensure_that_metadata_is_accepted_correctly()
-        {
-            await Command.RunSuccessAsync(
-                new SubmitAppRating
-                {
-                    Rating = 5.0,
-                    AdditionalComment = null,
-                    AppVersion = "1.23.456",
-                    Platform = PlatformDTO.Android,
-                    SystemVersion = "14",
-                    Metadata = new Dictionary<string, object>()
-                    {
-                        ["foo"] = "bar",
-                        ["foo2"] = new string[] { "baba1", "baba2" },
-                        ["foo3"] = new { some = "object" },
-                    }
-                }
-            );
-        }
+    private async Task EnsureValidationWorks()
+    {
+        await Command.RunFailureAsync(
+            new SubmitAppRating { AdditionalComment = new string('a', 4001), },
+            SubmitAppRating.ErrorCodes.AdditionalCommentTooLong,
+            SubmitAppRating.ErrorCodes.AppVersionRequired,
+            SubmitAppRating.ErrorCodes.SystemVersionRequired,
+            SubmitAppRating.ErrorCodes.RatingInvalid
+        );
+    }
+
+    private Task<bool> UserAlreadySentRating()
+    {
+        return Query.GetAsync(new RatingAlreadySent { });
     }
 }
