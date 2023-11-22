@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <CoreLibVersion>8.0.2260-preview</CoreLibVersion>
+    <CoreLibVersion>8.0.2305-preview</CoreLibVersion>
     <EFCoreVersion>8.0.0</EFCoreVersion>
   </PropertyGroup>
 
@@ -19,6 +19,19 @@
     <PackageReference Update="Microsoft.EntityFrameworkCore" Version="$(EFCoreVersion)" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="$(EFCoreVersion)" />
     <PackageReference Update="Serilog" Version="3.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <PackageReference Update="FluentAssertions" Version="6.12.0" />
+      <PackageReference Update="LeanCode.CQRS.AspNetCore" Version="$(CoreLibVersion)" />
+      <PackageReference Update="LeanCode.IntegrationTestHelpers" Version="$(CoreLibVersion)" />
+      <PackageReference Update="LeanCode.Startup.MicrosoftDI" Version="$(CoreLibVersion)" />
+      <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EFCoreVersion)" />
+      <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.6.0"/>
+      <PackageReference Update="NSubstitute" Version="5.1.0" />
+      <PackageReference Update="xunit" Version="2.5.3" />
+      <PackageReference Update="xunit.runner.visualstudio" Version="2.5.3" />
+      <PackageReference Update="coverlet.collector" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
