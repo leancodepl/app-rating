@@ -27,6 +27,12 @@ jobs:
           MSSQL_SA_PASSWORD: Passw12#
         ports:
           - "1433:1433"
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: Passw12#
+        ports:
+          - "5432:5432"
     env:
       DOTNET_VERSION: 8.0
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -82,7 +88,7 @@ jobs:
       - name: Test
         run: dotnet msbuild -t:RunTests -p:Configuration=Release -p:LogFileName="$PWD/../TestResults/tests.trx"
         working-directory: ./backend/tests
-      - name: Integration test
+      - name: Integration Test SqlServer
         run: |
           dotnet test \
           ./tests/LeanCode.AppRating.IntegrationTests/LeanCode.AppRating.IntegrationTests.csproj \
@@ -90,7 +96,18 @@ jobs:
           --logger "trx;LogFileName=LeanCode.AppRating.IntegrationTests.trx" \
           --results-directory TestResults
         env:
+          AppReviewIntegrationTests__Database: sqlserver
           SqlServer__ConnectionStringBase: Server=localhost,1433;User Id=sa;Password=Passw12#;Encrypt=false
+      - name: Integration Test Postgres
+        run: |
+          dotnet test \
+          ./tests/LeanCode.AppRating.IntegrationTests/LeanCode.AppRating.IntegrationTests.csproj \
+          --no-build \
+          --logger "trx;LogFileName=LeanCode.AppRating.IntegrationTests.Postgres.trx" \
+          --results-directory TestResults
+        env:
+          AppReviewIntegrationTests__Database: postgres
+          Postgres__ConnectionStringBase: Host=localhost;Username=postgres;Password=Passw12#
       - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v3

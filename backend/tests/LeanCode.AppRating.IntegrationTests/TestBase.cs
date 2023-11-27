@@ -19,8 +19,7 @@ public class TestBase : LeanCodeTestFactory<App.Startup>
 
     protected JsonSerializerOptions JsonSerializerOptions { get; } = new() { };
 
-    protected override ConfigurationOverrides Configuration { get; } =
-        new("SqlServer__ConnectionStringBase", "SqlServer:ConnectionString", Serilog.Events.LogEventLevel.Verbose);
+    protected override ConfigurationOverrides Configuration => TestDatabaseConfig.Create().GetConfigurationOverrides();
 
     public TestBase()
     {

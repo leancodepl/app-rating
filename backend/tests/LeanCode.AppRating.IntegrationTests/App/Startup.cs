@@ -18,16 +18,18 @@ public class Startup : LeanStartup
 {
     public static readonly TypesCatalog Contracts = new(typeof(Startup)); // nothing
     public static readonly TypesCatalog Handlers = new(typeof(Startup)); // nothing
+    private readonly TestDatabaseConfig testDatabaseConfig;
 
     public Startup(IConfiguration config)
-        : base(config) { }
+        : base(config)
+    {
+        testDatabaseConfig = TestDatabaseConfig.Create();
+    }
 
     public override void ConfigureServices(IServiceCollection services)
     {
         services.AddHostedService<DbContextInitializer<TestDbContext>>();
-        services.AddDbContext<TestDbContext>(
-            opts => opts.UseSqlServer(Configuration.GetValue<string>("SqlServer:ConnectionString"))
-        );
+        services.AddDbContext<TestDbContext>(cfg => testDatabaseConfig.ConfigureDbContext(cfg, Configuration));
         services.AddFluentValidation(Handlers);
         services.AddCQRS(Contracts, Handlers).AddAppRating<Guid, TestDbContext, UserIdExtractor>();
 
