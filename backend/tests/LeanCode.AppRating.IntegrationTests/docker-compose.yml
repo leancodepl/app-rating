@@ -7,3 +7,9 @@ services:
       - MSSQL_SA_PASSWORD=Passw12#
     ports:
       - "1433:1433"
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: Passw12#
+    ports:
+      - "5432:5432"

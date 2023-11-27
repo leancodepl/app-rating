@@ -27,6 +27,12 @@ jobs:
           MSSQL_SA_PASSWORD: Passw12#
         ports:
           - "1433:1433"
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: Passw12#
+        ports:
+          - "5432:5432"
     env:
       DOTNET_VERSION: 8.0
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -82,7 +88,7 @@ jobs:
       - name: Test
         run: dotnet msbuild -t:RunTests -p:Configuration=Release -p:LogFileName="$PWD/../TestResults/tests.trx"
         working-directory: ./backend/tests
-      - name: Integration test
+      - name: Integration Test SqlServer
         run: |
           dotnet test \
           ./tests/LeanCode.AppRating.IntegrationTests/LeanCode.AppRating.IntegrationTests.csproj \
@@ -90,7 +96,18 @@ jobs:
           --logger "trx;LogFileName=LeanCode.AppRating.IntegrationTests.trx" \
           --results-directory TestResults
         env:
+          AppReviewIntegrationTests__Database: sqlserver
           SqlServer__ConnectionStringBase: Server=localhost,1433;User Id=sa;Password=Passw12#;Encrypt=false
+      - name: Integration Test Postgres
+        run: |
+          dotnet test \
+          ./tests/LeanCode.AppRating.IntegrationTests/LeanCode.AppRating.IntegrationTests.csproj \
+          --no-build \
+          --logger "trx;LogFileName=LeanCode.AppRating.IntegrationTests.Postgres.trx" \
+          --results-directory TestResults
+        env:
+          AppReviewIntegrationTests__Database: postgres
+          Postgres__ConnectionStringBase: Host=localhost;Username=postgres;Password=Passw12#
       - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v3
@@ -98,19 +115,19 @@ jobs:
           name: test_results.zip
           path: backend/TestResults/*.trx
       - name: Pack AppRating Contracts
-        if: ${{ needs.prepare.outputs.publish_artifacts == '1' }}
+        if: ${{ steps.version.outputs.publish_artifacts == '1' }}
         env:
           BUILD_VERSION: ${{ steps.version.outputs.version }}
         run: dotnet pack --no-build -c Release -p:Version=$BUILD_VERSION
         working-directory: ./backend/src/LeanCode.AppRating.Contracts
       - name: Pack AppRating
-        if: ${{ needs.prepare.outputs.publish_artifacts == '1' }}
+        if: ${{ steps.version.outputs.publish_artifacts == '1' }}
         env:
           BUILD_VERSION: ${{ steps.version.outputs.version }}
         run: dotnet pack --no-build -c Release -p:Version=$BUILD_VERSION
         working-directory: ./backend/src/LeanCode.AppRating
       - name: Publish to Feedz
-        if: ${{ needs.prepare.outputs.publish_artifacts == '1' }}
+        if: ${{ steps.version.outputs.publish_artifacts == '1' }}
         run: |
           dotnet nuget push \
             "src/LeanCode.AppRating.Contracts/bin/Release/LeanCode.AppRating.Contracts.${BUILD_VERSION}.nupkg" \
@@ -122,7 +139,7 @@ jobs:
           BUILD_VERSION: ${{ steps.version.outputs.version }}
           FEEDZ_API_KEY: ${{ secrets.FEEDZ_API_KEY }}
       - name: Publish to Nuget
-        if: ${{ needs.prepare.outputs.publish_nuget == '1' }}
+        if: ${{ steps.version.outputs.publish_nuget == '1' }}
         run: |
           dotnet nuget push \
             "src/LeanCode.AppRating.Contracts/bin/Release/LeanCode.AppRating.Contracts.${BUILD_VERSION}.nupkg" \
