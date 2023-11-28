@@ -1,10 +1,8 @@
-using System.Reflection;
 using FluentValidation;
 using LeanCode.AppRating.Contracts;
-using LeanCode.AppRating.CQRS;
 using LeanCode.AppRating.DataAccess;
+using LeanCode.AppRating.Handlers;
 using LeanCode.CQRS.AspNetCore;
-using LeanCode.CQRS.Validation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

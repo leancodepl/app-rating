@@ -10,13 +10,16 @@
     <PackageReference Update="LeanCode.Components"  Version="$(CoreLibVersion)" />
     <PackageReference Update="LeanCode.CQRS.AspNetCore" Version="$(CoreLibVersion)" />
     <PackageReference Update="LeanCode.CQRS.Execution" Version="$(CoreLibVersion)" />
+    <PackageReference Update="LeanCode.CQRS.MassTransitRelay" Version="$(CoreLibVersion)" />
     <PackageReference Update="LeanCode.CQRS.Validation.Fluent" Version="$(CoreLibVersion)" />
     <PackageReference Update="LeanCode.DomainModels.EF" Version="$(CoreLibVersion)" />
+    <PackageReference Update="LeanCode.SendGrid" Version="$(CoreLibVersion)" />
     <PackageReference Update="LeanCode.TimeProvider" Version="$(CoreLibVersion)" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Update="FluentValidation" Version="11.5.1" />
+    <PackageReference Update="MassTransit" Version="8.1.1" />
     <PackageReference Update="Microsoft.EntityFrameworkCore" Version="$(EFCoreVersion)" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="$(EFCoreVersion)" />
     <PackageReference Update="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />

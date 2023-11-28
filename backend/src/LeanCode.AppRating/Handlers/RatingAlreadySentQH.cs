@@ -4,7 +4,7 @@ using LeanCode.CQRS.Execution;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
-namespace LeanCode.AppRating.CQRS;
+namespace LeanCode.AppRating.Handlers;
 
 public class RatingAlreadySentQH<TUserId> : IQueryHandler<RatingAlreadySent, bool>
     where TUserId : notnull, IEquatable<TUserId>

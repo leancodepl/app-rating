@@ -1,6 +1,6 @@
 using FluentValidation.TestHelper;
 using LeanCode.AppRating.Contracts;
-using LeanCode.AppRating.CQRS;
+using LeanCode.AppRating.Handlers;
 using Xunit;
 
 namespace LeanCode.AppRating.Tests;

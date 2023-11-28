@@ -13,7 +13,7 @@ public class TestDbContext : DbContext, IAppRatingStore<Guid>
         config = TestDatabaseConfig.Create();
     }
 
-    public DbSet<AppRatingEntity<Guid>> AppRatings => Set<AppRatingEntity<Guid>>();
+    public DbSet<AppRating<Guid>> AppRatings => Set<AppRating<Guid>>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

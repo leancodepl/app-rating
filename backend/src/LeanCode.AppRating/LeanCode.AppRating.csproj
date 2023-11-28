@@ -3,7 +3,9 @@
     <PackageReference Include="LeanCode.Components" />
     <PackageReference Include="LeanCode.CQRS.AspNetCore" />
     <PackageReference Include="LeanCode.CQRS.Execution" />
+    <PackageReference Include="LeanCode.CQRS.MassTransitRelay" />
     <PackageReference Include="LeanCode.CQRS.Validation.Fluent" />
+    <PackageReference Include="LeanCode.SendGrid" />
     <PackageReference Include="LeanCode.TimeProvider" />
 
     <ProjectReference Include="../LeanCode.AppRating.Contracts/LeanCode.AppRating.Contracts.csproj" />
@@ -11,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" />
+    <PackageReference Include="MassTransit" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
     <PackageReference Include="Serilog" />

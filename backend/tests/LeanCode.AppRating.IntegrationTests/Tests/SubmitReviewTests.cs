@@ -1,12 +1,14 @@
 using FluentAssertions;
 using LeanCode.AppRating.Contracts;
 using LeanCode.AppRating.IntegrationTests;
+using LeanCode.AppRating.IntegrationTests.App;
 using LeanCode.AppRating.IntegrationTests.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace LeanCode.NotificationCenter.IntegrationTests.Tests;
 
-public class SubmitReviewTests : TestBase
+public class SubmitReviewTests : TestsBase<TestApp>
 {
     [Fact]
     public async Task Review_is_submitted_correctly()
@@ -22,11 +24,13 @@ public class SubmitReviewTests : TestBase
         alreadySentRating.Should().BeTrue();
 
         await EnsureThatMetadataIsAcceptedCorrectly();
+
+        await EnsureLowRatingSubmittedEmailSent();
     }
 
     private async Task EnsureThatMetadataIsAcceptedCorrectly()
     {
-        await Command.RunSuccessAsync(
+        await App.Command.RunSuccessAsync(
             new SubmitAppRating
             {
                 Rating = 5.0,
@@ -46,7 +50,7 @@ public class SubmitReviewTests : TestBase
 
     private async Task SubmitCorrectReview()
     {
-        await Command.RunSuccessAsync(
+        await App.Command.RunSuccessAsync(
             new SubmitAppRating
             {
                 Rating = 5.0,
@@ -60,7 +64,7 @@ public class SubmitReviewTests : TestBase
 
     private async Task EnsureValidationWorks()
     {
-        await Command.RunFailureAsync(
+        await App.Command.RunFailureAsync(
             new SubmitAppRating { AdditionalComment = new string('a', 4001), },
             SubmitAppRating.ErrorCodes.AdditionalCommentTooLong,
             SubmitAppRating.ErrorCodes.AppVersionRequired,
@@ -71,6 +75,23 @@ public class SubmitReviewTests : TestBase
 
     private Task<bool> UserAlreadySentRating()
     {
-        return Query.GetAsync(new RatingAlreadySent { });
+        return App.Query.GetAsync(new RatingAlreadySent { });
+    }
+
+    private async Task EnsureLowRatingSubmittedEmailSent()
+    {
+        await App.Command.RunSuccessAsync(
+            new SubmitAppRating
+            {
+                Rating = 1.0,
+                AdditionalComment = new string('a', 200),
+                AppVersion = "1.23.456",
+                Platform = PlatformDTO.Android,
+                SystemVersion = "14",
+            }
+        );
+        await App.WaitForBusAsync();
+
+        App.Services.GetService<SendGridRazorClientMock>()!.SentEmailsCount.Should().Be(1);
     }
 }
