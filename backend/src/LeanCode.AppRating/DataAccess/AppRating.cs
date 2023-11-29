@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 
 namespace LeanCode.AppRating.DataAccess;
 
-public sealed record class AppRatingEntity<TUserId>(
+public sealed record class AppRating<TUserId>(
     TUserId UserId,
     DateTimeOffset DateCreated,
     double Rating,

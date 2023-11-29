@@ -9,7 +9,7 @@ public static class ModelBuilderExtensions
     public static void ConfigureAppRatingEntity<TUserId>(this ModelBuilder builder, SqlDbType sqlDbType)
         where TUserId : notnull, IEquatable<TUserId>
     {
-        builder.Entity<AppRatingEntity<TUserId>>(c =>
+        builder.Entity<AppRating<TUserId>>(c =>
         {
             c.HasKey(e => new { e.UserId, e.DateCreated });
 

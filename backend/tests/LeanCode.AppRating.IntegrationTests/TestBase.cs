@@ -6,22 +6,40 @@ using LeanCode.IntegrationTestHelpers;
 using LeanCode.Logging;
 using LeanCode.Startup.MicrosoftDI;
 using Microsoft.Extensions.Hosting;
+using Xunit;
 
 namespace LeanCode.AppRating.IntegrationTests;
 
-public class TestBase : LeanCodeTestFactory<App.Startup>
+public abstract class TestsBase<TApp> : IAsyncLifetime, IDisposable
+    where TApp : TestApp, new()
+{
+    protected TApp App { get; private set; }
+
+    public TestsBase()
+    {
+        App = new();
+    }
+
+    Task IAsyncLifetime.InitializeAsync() => App.InitializeAsync();
+
+    Task IAsyncLifetime.DisposeAsync() => App.DisposeAsync().AsTask();
+
+    void IDisposable.Dispose() => App.Dispose();
+}
+
+public class TestApp : LeanCodeTestFactory<App.Startup>
 {
     public readonly Guid UserId = Guid.Parse("4d3b45e6-a2c1-4d6a-9e23-94e0d9f8ca01");
 
     protected HttpClient Client { get; set; }
-    protected HttpCommandsExecutor Command { get; set; }
-    protected HttpQueriesExecutor Query { get; set; }
+    public HttpCommandsExecutor Command { get; set; }
+    public HttpQueriesExecutor Query { get; set; }
 
     protected JsonSerializerOptions JsonSerializerOptions { get; } = new() { };
 
     protected override ConfigurationOverrides Configuration => TestDatabaseConfig.Create().GetConfigurationOverrides();
 
-    public TestBase()
+    public TestApp()
     {
         var claimsPrincipal = GetClaimsPrincipal(UserId);
 

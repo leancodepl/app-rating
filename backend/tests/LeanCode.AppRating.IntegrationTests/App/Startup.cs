@@ -1,14 +1,15 @@
 using System.Security.Claims;
+using LeanCode.AppRating.Configuration;
 using LeanCode.Components;
 using LeanCode.CQRS.AspNetCore;
 using LeanCode.CQRS.MassTransitRelay;
 using LeanCode.CQRS.Validation.Fluent;
 using LeanCode.IntegrationTestHelpers;
+using LeanCode.SendGrid;
 using LeanCode.Startup.MicrosoftDI;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -46,7 +47,27 @@ public class Startup : LeanStartup
                     RegistrationContextExtensions.ConfigureEndpoints(cfg, ctx);
                 }
             );
+
+            busCfg.AddAppRatingConsumers<Guid>();
         });
+
+        var sendGridRazorClientMock = new SendGridRazorClientMock();
+
+        services.AddSingleton<SendGridRazorClient>(sendGridRazorClientMock);
+        services.AddSingleton(sendGridRazorClientMock);
+
+        services.AddSingleton(
+            new AppRatingReportsConfiguration(
+                2.0,
+                "en",
+                "subject",
+                "test+from@leancode.pl",
+                [ "test+to@leancode.pl" ],
+                [ "test+bcc@leancode.pl" ]
+            )
+        );
+
+        services.AddBusActivityMonitor();
     }
 
     protected override void ConfigureApp(IApplicationBuilder app)

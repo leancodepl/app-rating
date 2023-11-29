@@ -1,13 +1,16 @@
 using System.Collections.Immutable;
+using System.Runtime.InteropServices;
 using FluentValidation;
+using LeanCode.AppRating.Configuration;
 using LeanCode.AppRating.Contracts;
 using LeanCode.AppRating.DataAccess;
 using LeanCode.CQRS.Execution;
 using LeanCode.CQRS.Validation.Fluent;
 using LeanCode.TimeProvider;
+using MassTransit;
 using Microsoft.AspNetCore.Http;
 
-namespace LeanCode.AppRating.CQRS;
+namespace LeanCode.AppRating.Handlers;
 
 public class SubmitAppRatingCV : AbstractValidator<SubmitAppRating>
 {
@@ -38,20 +41,31 @@ public class SubmitAppRatingCH<TUserId> : ICommandHandler<SubmitAppRating>
 {
     private readonly IAppRatingStore<TUserId> store;
     private readonly IUserIdExtractor<TUserId> extractor;
+    private readonly IPublishEndpoint publishEndpoint;
+    private readonly AppRatingReportsConfiguration appRatingReportsConfiguration;
 
-    public SubmitAppRatingCH(IAppRatingStore<TUserId> store, IUserIdExtractor<TUserId> extractor)
+    public SubmitAppRatingCH(
+        IAppRatingStore<TUserId> store,
+        IUserIdExtractor<TUserId> extractor,
+        IPublishEndpoint publishEndpoint,
+        AppRatingReportsConfiguration appRatingReportsConfiguration
+    )
     {
         this.store = store;
         this.extractor = extractor;
+        this.publishEndpoint = publishEndpoint;
+        this.appRatingReportsConfiguration = appRatingReportsConfiguration;
     }
 
-    public Task ExecuteAsync(HttpContext context, SubmitAppRating command)
+    public async Task ExecuteAsync(HttpContext context, SubmitAppRating command)
     {
+        var userId = extractor.Extract(context);
+
         store
             .AppRatings
             .Add(
-                new AppRatingEntity<TUserId>(
-                    extractor.Extract(context),
+                new AppRating<TUserId>(
+                    userId,
                     Time.NowWithOffset,
                     command.Rating,
                     command.AdditionalComment,
@@ -62,6 +76,12 @@ public class SubmitAppRatingCH<TUserId> : ICommandHandler<SubmitAppRating>
                 )
             );
 
-        return Task.CompletedTask;
+        if (command.Rating < appRatingReportsConfiguration.LowRatingUpperBoundInclusive)
+        {
+            await publishEndpoint.Publish(
+                new LowRateSubmitted<TUserId>(userId, command.Rating, command.AdditionalComment),
+                context.RequestAborted
+            );
+        }
     }
 }
