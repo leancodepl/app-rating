@@ -38,9 +38,6 @@ public class SendEmailOnLowRateSubmittedEH<TUserId> : IConsumer<LowRateSubmitted
             .WithRecipients(
                 appRatingReportsConfiguration.ToEmails.Select(e => new EmailAddress() { Email = e, }).ToList()
             )
-            .WithBlindCarbonCopyRecipients(
-                appRatingReportsConfiguration.BccEmails.Select(e => new EmailAddress() { Email = e, }).ToList()
-            )
             .WithHtmlContent(vm)
             .WithPlainTextContent(vm)
             .WithNoTracking();

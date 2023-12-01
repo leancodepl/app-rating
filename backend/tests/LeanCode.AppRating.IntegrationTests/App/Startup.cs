@@ -57,14 +57,7 @@ public class Startup : LeanStartup
         services.AddSingleton(sendGridRazorClientMock);
 
         services.AddSingleton(
-            new AppRatingReportsConfiguration(
-                2.0,
-                "en",
-                "subject",
-                "test+from@leancode.pl",
-                [ "test+to@leancode.pl" ],
-                [ "test+bcc@leancode.pl" ]
-            )
+            new AppRatingReportsConfiguration(2.0, "en", "subject", "test+from@leancode.pl", [ "test+to@leancode.pl" ])
         );
 
         services.AddBusActivityMonitor();
