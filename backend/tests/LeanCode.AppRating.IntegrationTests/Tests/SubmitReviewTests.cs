@@ -83,7 +83,7 @@ public class SubmitReviewTests : TestsBase<TestApp>
         await App.Command.RunSuccessAsync(
             new SubmitAppRating
             {
-                Rating = 1.0,
+                Rating = 2.0,
                 AdditionalComment = new string('a', 200),
                 AppVersion = "1.23.456",
                 Platform = PlatformDTO.Android,
