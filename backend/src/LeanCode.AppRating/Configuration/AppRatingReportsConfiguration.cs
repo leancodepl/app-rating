@@ -5,6 +5,5 @@ public sealed record class AppRatingReportsConfiguration(
     string LowRatingEmailCulture,
     string LowRatingEmailSubjectKey,
     string FromEmail,
-    string[] ToEmails,
-    string[] BccEmails
+    string[] ToEmails
 ) { }
