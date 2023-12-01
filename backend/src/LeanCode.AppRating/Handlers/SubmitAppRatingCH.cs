@@ -76,7 +76,7 @@ public class SubmitAppRatingCH<TUserId> : ICommandHandler<SubmitAppRating>
                 )
             );
 
-        if (command.Rating < appRatingReportsConfiguration.LowRatingUpperBoundInclusive)
+        if (command.Rating <= appRatingReportsConfiguration.LowRatingUpperBoundInclusive)
         {
             await publishEndpoint.Publish(
                 new LowRateSubmitted<TUserId>(userId, command.Rating, command.AdditionalComment),
