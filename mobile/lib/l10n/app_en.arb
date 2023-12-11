@@ -1,0 +1,33 @@
+{
+    "@@locale": "en",
+    "starDialogHeader": "Rate us",
+    "starDialogSubtitle": "Tap a star to rate",
+    "starDialogPrimaryButton": "Send",
+    "starDialogSecondaryButton": "Dismiss",
+    "starDialogRateUsHeader": "Thank you!",
+    "starDialogRateUsSubtitle": "If you enjoy using this app, rate it in the {store}.",
+    "@starDialogRateUsSubtitle": {
+        "placeholders": {
+            "store": {
+                "type": "String"
+            }
+        }
+    },
+    "starDialogOpenStoreButton": "Rate in the {store}",
+    "@starDialogOpenStoreButton": {
+        "placeholders": {
+            "store": {
+                "type": "String"
+            }
+        }
+    },
+    "starDialogOpenStoreCloseButton": "Dismiss",
+    "textFieldHint": "How was your experience ?",
+    "singleAnswerDialogHeader": "Are you enjoying this app?",
+    "singleAnswerDialogPositiveButton": "Yes",
+    "singleAnswerDialogNegativeButton": "No",
+    "singleAnswerDialogCancelButton": "Remind me later",
+    "singleAnswerDialogMoreInfoHeader": "Help us improve",
+    "singleAnswerDialogMoreInfoPrimaryButton": "Send",
+    "singleAnswerDialogMoreInfoSecondaryButton": "Dismiss"
+}
