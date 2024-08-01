@@ -1,0 +1,33 @@
+{
+    "@@locale": "pl",
+    "starDialogHeader": "Oceń nas",
+    "starDialogSubtitle": "Kliknij na gwiazdkę, aby ocenić",
+    "starDialogPrimaryButton": "Wyślij",
+    "starDialogSecondaryButton": "Anuluj",
+    "starDialogRateUsHeader": "Dziękujemy!",
+    "starDialogRateUsSubtitle": "Jeśli jesteś zadowolony/a z korzystania z naszej aplikacji, oceń nas w {store}.",
+    "@starDialogRateUsSubtitle": {
+        "placeholders": {
+            "store": {
+                "type": "String"
+            }
+        }
+    },
+    "starDialogOpenStoreButton": "Oceń w {store}",
+    "@starDialogOpenStoreButton": {
+        "placeholders": {
+            "store": {
+                "type": "String"
+            }
+        }
+    },
+    "starDialogOpenStoreCloseButton": "Anuluj",
+    "textFieldHint": "Jak oceniasz swoje doświadczenie?",
+    "singleAnswerDialogHeader": "Czy jesteś zadowolony/a z aplikacji?",
+    "singleAnswerDialogPositiveButton": "Tak",
+    "singleAnswerDialogNegativeButton": "Nie",
+    "singleAnswerDialogCancelButton": "Przypomnij mi później",
+    "singleAnswerDialogMoreInfoHeader": "Pomóż nam stawać się lepszym",
+    "singleAnswerDialogMoreInfoPrimaryButton": "Wyślij",
+    "singleAnswerDialogMoreInfoSecondaryButton": "Anuluj"
+}

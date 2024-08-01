@@ -1,0 +1,13 @@
+# Possible input methods, specify exactly one (required)
+input:
+  project:
+    - ../backend/src/LeanCode.AppRating.Contracts/LeanCode.AppRating.Contracts.csproj
+name: contracts
+# Regex to filter-in namespaced statements
+include: .*
+# Output directory
+output: lib/data/contracts
+# Directives (`export`, `import`, `part` etc.) to be added to the generated contracts file
+directives: ""
+# Code to be added to the generated contracts file after all directives
+extra: ""
