@@ -17,6 +17,14 @@ If the user provides a positive review, they will be kindly asked to rate the ap
 
 ### Setup
 
+Add `AppRatingLocalizations` to your localizations delegates in `MaterialApp`"
+```dart
+  localizationsDelegates: const [
+    (...)
+    ...AppRatingLocalizations.localizationsDelegates,
+  ],
+```
+
 Initialize `AppRating` instace with:
 - your `cqrs`
 - your app's AppStore ID (ex. `apps.apple.com/us/app/example/id000000000`)
