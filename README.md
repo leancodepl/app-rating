@@ -73,6 +73,25 @@ void showStarDialog(
 
 The showStarDialog function displays a dialog box allowing the user to provide a star rating. If the user rates the app with fewer than 5 stars, the dialog expands to include a text field for additional comments. For high ratings (5 stars), the dialog changes its appearance by showing a button that directs the user to the app store to submit a review.
 
+### Customization
+
+In the current version of this package, you're not able to have a strong impact on how the dialogs look and how the flow works. You can apply your own texts and labels into `showStarDialog` and `showSingleAnswerDialog` methods. But at this moment, that's it. 
+
+## Guidelines
+
+While the `AppRating` instance shares the `in_app_review` interface with the `requestReview()` method, it is not recommended to use this method directly. App store guidelines are typically strict regarding when and how users are asked to leave the reviews. Also offering in-app rewards for the reviews is often prohibited.
+
+If you want to implement a "Give us feedback" action button, use one of the following methods:
+- `appRating.showStarDialog()`
+- `appRating.showSimpleAnswerDialog()`
+- `appRating.inAppReview.openStoreListing()` (for a more direct approach, but use with caution).
+
+If you choose to use the `appRating.inAppReview.requestReview()` method, ensure it is integrated into the app’s logic in a way that avoids triggering it too early or too frequently, to comply with store guidelines.
+
+Check out these official guidelines:
+- https://developer.apple.com/design/human-interface-guidelines/ios/system-capabilities/ratings-and-reviews/
+- https://developer.android.com/guide/playcore/in-app-review#when-to-request https://developer.android.com/guide/playcore/in-app-review#design-guidelines
+
 ## Team
 
 @lukaszgarstecki
