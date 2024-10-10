@@ -108,7 +108,8 @@ If you choose to use the `appRating.inAppReview.requestReview()` method, ensure 
 
 Check out these official guidelines:
 - https://developer.apple.com/design/human-interface-guidelines/ios/system-capabilities/ratings-and-reviews/
-- https://developer.android.com/guide/playcore/in-app-review#when-to-request https://developer.android.com/guide/playcore/in-app-review#design-guidelines
+- https://developer.android.com/guide/playcore/in-app-review#when-to-request
+- https://developer.android.com/guide/playcore/in-app-review#design-guidelines
 
 ## Team
 - @lukaszgarstecki
