@@ -77,6 +77,16 @@ The showStarDialog function displays a dialog box allowing the user to provide a
 
 In the current version of this package, you're not able to have a strong impact on how the dialogs look and how the flow works. You can apply your own texts and labels into `showStarDialog` and `showSingleAnswerDialog` methods. But at this moment, that's it. 
 
+## Requirements
+**Note:** Debuging this on the emulators or the simulators will not provide the faithful experience of production environment.
+
+### Android 
+- Android 5 or higher
+- Google Play Store must be installed.
+
+### iOS 
+Requires iOS version 10.3
+
 ## Guidelines
 
 While the `AppRating` instance shares the `in_app_review` interface with the `requestReview()` method, it is not recommended to use this method directly. App store guidelines are typically strict regarding when and how users are asked to leave the reviews. Also offering in-app rewards for the reviews is often prohibited.
@@ -93,6 +103,5 @@ Check out these official guidelines:
 - https://developer.android.com/guide/playcore/in-app-review#when-to-request https://developer.android.com/guide/playcore/in-app-review#design-guidelines
 
 ## Team
-
-@lukaszgarstecki
-@denis-lncd
+- @lukaszgarstecki
+- @denis-lncd
