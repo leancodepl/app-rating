@@ -20,9 +20,13 @@ public class RatingAlreadySentQH<TUserId> : IQueryHandler<RatingAlreadySent, boo
 
     public Task<bool> ExecuteAsync(HttpContext context, RatingAlreadySent query)
     {
-        return store
-            .AppRatings
-            .Where(r => (object)r.UserId == (object)extractor.Extract(context))
-            .AnyAsync(context.RequestAborted);
+        if (extractor.TryExtract(context, out var userId))
+        {
+            return store.AppRatings.Where(r => (object?)r.UserId == (object?)userId).AnyAsync(context.RequestAborted);
+        }
+        else
+        {
+            throw new InvalidOperationException("UserId could not be extracted.");
+        }
     }
 }

@@ -1,6 +1,4 @@
 using LeanCode.AppRating.DataAccess;
-using LeanCode.CQRS.MassTransitRelay.LockProviders;
-using LeanCode.DomainModels.EF;
 using LeanCode.IntegrationTestHelpers;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;

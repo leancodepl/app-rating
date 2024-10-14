@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text.Json;
+using LeanCode.DomainModels.EF;
 using Microsoft.EntityFrameworkCore;
 
 namespace LeanCode.AppRating.DataAccess;
@@ -11,7 +12,10 @@ public static class ModelBuilderExtensions
     {
         builder.Entity<AppRating<TUserId>>(c =>
         {
-            c.HasKey(e => new { e.UserId, e.DateCreated });
+            c.HasKey(e => e.Id);
+            c.Property(e => e.Id).HasConversion<RawTypedIdConverter<Guid, AppRatingId>>();
+
+            c.HasIndex(e => new { e.UserId, e.DateCreated });
 
             c.Property(e => e.UserId).ValueGeneratedNever();
 

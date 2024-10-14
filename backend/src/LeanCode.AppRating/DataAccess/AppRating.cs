@@ -1,9 +1,14 @@
 using System.Collections.Immutable;
+using LeanCode.DomainModels.Ids;
 
 namespace LeanCode.AppRating.DataAccess;
 
+[TypedId(TypedIdFormat.RawGuid)]
+public readonly partial record struct AppRatingId;
+
 public sealed record class AppRating<TUserId>(
-    TUserId UserId,
+    AppRatingId Id,
+    TUserId? UserId,
     DateTimeOffset DateCreated,
     double Rating,
     string? AdditionalComment,

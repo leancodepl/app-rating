@@ -1,10 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="LeanCode.Components" />
     <PackageReference Include="LeanCode.CQRS.AspNetCore" />
     <PackageReference Include="LeanCode.CQRS.Execution" />
     <PackageReference Include="LeanCode.CQRS.MassTransitRelay" />
     <PackageReference Include="LeanCode.CQRS.Validation.Fluent" />
+    <PackageReference Include="LeanCode.DomainModels.EF" />
+    <PackageReference Include="LeanCode.DomainModels.Generators" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <PackageReference Include="LeanCode.SendGrid" />
     <PackageReference Include="LeanCode.TimeProvider" />
 
