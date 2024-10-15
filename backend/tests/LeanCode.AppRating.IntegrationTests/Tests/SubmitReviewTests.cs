@@ -1,12 +1,11 @@
 using FluentAssertions;
 using LeanCode.AppRating.Contracts;
-using LeanCode.AppRating.IntegrationTests;
 using LeanCode.AppRating.IntegrationTests.App;
 using LeanCode.AppRating.IntegrationTests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace LeanCode.NotificationCenter.IntegrationTests.Tests;
+namespace LeanCode.AppRating.IntegrationTests.Tests;
 
 public class SubmitReviewTests : TestsBase<TestApp>
 {

@@ -13,6 +13,7 @@
     <PackageReference Update="LeanCode.CQRS.MassTransitRelay" Version="$(CoreLibVersion)" />
     <PackageReference Update="LeanCode.CQRS.Validation.Fluent" Version="$(CoreLibVersion)" />
     <PackageReference Update="LeanCode.DomainModels.EF" Version="$(CoreLibVersion)" />
+    <PackageReference Update="LeanCode.DomainModels.Generators" Version="$(CoreLibVersion)" />
     <PackageReference Update="LeanCode.SendGrid" Version="$(CoreLibVersion)" />
     <PackageReference Update="LeanCode.TimeProvider" Version="$(CoreLibVersion)" />
   </ItemGroup>

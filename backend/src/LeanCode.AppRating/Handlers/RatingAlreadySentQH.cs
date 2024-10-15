@@ -22,7 +22,7 @@ public class RatingAlreadySentQH<TUserId> : IQueryHandler<RatingAlreadySent, boo
     {
         return store
             .AppRatings
-            .Where(r => (object)r.UserId == (object)extractor.Extract(context))
+            .Where(r => (object?)r.UserId == (object?)extractor.Extract(context))
             .AnyAsync(context.RequestAborted);
     }
 }

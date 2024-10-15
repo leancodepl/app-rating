@@ -3,7 +3,7 @@ using LeanCode.AppRating.Contracts;
 using LeanCode.AppRating.Handlers;
 using Xunit;
 
-namespace LeanCode.AppRating.Tests;
+namespace LeanCode.AppRating.Tests.CQRS;
 
 public class SubmitAppRatingCVTests
 {

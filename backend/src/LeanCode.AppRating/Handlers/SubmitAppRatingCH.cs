@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Runtime.InteropServices;
 using FluentValidation;
 using LeanCode.AppRating.Configuration;
 using LeanCode.AppRating.Contracts;
@@ -59,12 +58,13 @@ public class SubmitAppRatingCH<TUserId> : ICommandHandler<SubmitAppRating>
 
     public async Task ExecuteAsync(HttpContext context, SubmitAppRating command)
     {
-        var userId = extractor.Extract(context);
+        var userId = extractor.TryExtract(context, out var uid) ? uid : default;
 
         store
             .AppRatings
             .Add(
                 new AppRating<TUserId>(
+                    AppRatingId.New(),
                     userId,
                     Time.NowWithOffset,
                     command.Rating,

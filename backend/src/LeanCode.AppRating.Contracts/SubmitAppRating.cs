@@ -3,7 +3,7 @@ using LeanCode.Contracts.Security;
 
 namespace LeanCode.AppRating.Contracts;
 
-[AuthorizeWhenHasAnyOf(RatingPermissions.RateApp)]
+[AllowUnauthorized]
 public class SubmitAppRating : ICommand
 {
     public double Rating { get; set; }

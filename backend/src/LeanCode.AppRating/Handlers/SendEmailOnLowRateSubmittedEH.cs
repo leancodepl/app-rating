@@ -27,7 +27,7 @@ public class SendEmailOnLowRateSubmittedEH<TUserId> : IConsumer<LowRateSubmitted
     {
         var vm = new LowRateSubmittedEmail
         {
-            UserId = context.Message.UserId.ToString()!,
+            UserId = context.Message.UserId?.ToString(),
             AdditionalComment = context.Message.AdditionalComment,
             Rating = context.Message.Rating,
         };
@@ -47,5 +47,5 @@ public class SendEmailOnLowRateSubmittedEH<TUserId> : IConsumer<LowRateSubmitted
     }
 }
 
-public sealed record class LowRateSubmitted<TUserId>(TUserId UserId, double Rating, string? AdditionalComment)
+public sealed record class LowRateSubmitted<TUserId>(TUserId? UserId, double Rating, string? AdditionalComment)
     where TUserId : notnull, IEquatable<TUserId>;

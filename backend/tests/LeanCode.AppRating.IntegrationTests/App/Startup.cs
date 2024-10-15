@@ -83,12 +83,12 @@ public class Startup : LeanStartup
 
 public sealed class UserIdExtractor : IUserIdExtractor<Guid>
 {
-    public Guid Extract(HttpContext httpContext)
+    public bool TryExtract(HttpContext httpContext, out Guid userId)
     {
         var claim = httpContext.User.FindFirstValue(KnownClaims.UserId);
 
         ArgumentException.ThrowIfNullOrEmpty(claim);
 
-        return Guid.Parse(claim);
+        return Guid.TryParse(claim, out userId);
     }
 }
