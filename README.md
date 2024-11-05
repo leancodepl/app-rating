@@ -11,11 +11,13 @@ This feature provides out-of-the-box support for collecting direct feedback from
 - **Five star rating with optional comment:** Users can provide a rating on a 1-5 star scale, accompanied by an optional comment.
 - **Yes/No Satisfaction:** Users can answer a simple yes/no question regarding their overall satisfaction with the application.
 
-If the user provides a positive review, they will be kindly asked to rate the application on the app store. In addition to the feedback, OS and mobile device parameters are automatically stored in the backend for analytics purposes. 
+If the user provides a positive review, they will be kindly asked to rate the application on the app store. In addition to the feedback, OS and mobile device parameters are automatically stored in the backend for analytics purposes.
 
 ## Usage
 
-### Setup
+### Mobile
+
+#### Setup
 
 Add `AppRatingLocalizations` to your localizations delegates in `MaterialApp`"
 ```dart
@@ -25,7 +27,7 @@ Add `AppRatingLocalizations` to your localizations delegates in `MaterialApp`"
   ],
 ```
 
-Initialize `AppRating` instace with:
+Initialize `AppRating` instance with:
 - your `cqrs`
 - your app's AppStore ID (ex. `apps.apple.com/us/app/example/id000000000`)
 - app version tag (`CFBundleShortVersionString` on iOS, `versionName` on Android). Feel free to use the [package_info_plus](https://pub.dev/packages/package_info_plus) for getting this value.
@@ -40,7 +42,7 @@ final rateApp = AppRating(
 
 then provide it globally with `Provider` and use wherever you want to.
 
-### Yes/No dialog
+#### Yes/No dialog
 
 ```dart
 void showSingleAnswerDialog(
@@ -63,7 +65,7 @@ Upon selecting Yes, the `requestReview` function from the [in_app_review](https:
 
 **WARNING:** The review dialog is not guaranteed to appear, as its display is controlled by the OS.
 
-### Five star rating dialog
+#### Five star rating dialog
 
 ```dart
 void showStarDialog(
@@ -81,18 +83,204 @@ void showStarDialog(
 
 The showStarDialog function displays a dialog box allowing the user to provide a star rating. If the user rates the app with fewer than 5 stars, the dialog expands to include a text field for additional comments. For high ratings (5 stars), the dialog changes its appearance by showing a button that directs the user to the app store to submit a review.
 
-### Customization
+#### Customization
 
-In the current version of this package, you're not able to have a strong impact on how the dialogs look and how the flow works. You can apply your own texts and labels into `showStarDialog` and `showSingleAnswerDialog` methods. But at this moment, that's it. 
+In the current version of this package, you're not able to have a strong impact on how the dialogs look and how the flow works. You can apply your own texts and labels into `showStarDialog` and `showSingleAnswerDialog` methods. But at this moment, that's it.
+
+## Backend
+
+The backend is responsible for storing the feedback data and sending it to the analytics system. The feedback data includes the following parameters:
+- `Rating` (double): The user's rating on a scale defined by mobile app.
+- `AdditionalComment` (string): The user's optional comment.
+- `Platform` (PlatformDTO): Android or iOS.
+- `SystemVersion` (string): The user's operating system version.
+- `AppVersion` (string): The user's application version.
+- `Metadata` (Dictionary<string, object>): Additional metadata containing any other data important (tenant information, feature flag configuration, etc.).
+
+### Setup
+
+Reference `LeanCode.AppRating.Contracts` in your contracts project.
+
+```
+  <ItemGroup>
+    (...)
+    <PackageReference Include="LeanCode.AppRating.Contracts" />
+    (...)
+  </ItemGroup>
+```
+Reference `LeanCode.AppRating` in your service.
+
+```
+  <ItemGroup>
+    (...)
+    <PackageReference Include="LeanCode.AppRating" />
+    (...)
+  </ItemGroup>
+```
+
+Configure `YourDbContext` so that it implements `IAppRatingStore<TUserId>` interface.
+
+```csharp
+public class YourDbContext : DbContext, IAppRatingStore<TUserId>
+{
+    (...)
+
+    public DbSet<AppRating<TUserId>> AppRatings => Set<AppRating<TUserId>>();
+
+    (...)
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        (...)
+
+        builder.ConfigureAppRatingEntity<TUserId>(SqlDbType.PostgreSql);
+
+        (...)
+    }
+}
+```
+
+Register AppRating module in your `Startup` class - you need to define:
+- `TUserId` - type of user id (Can be `Guid`, `int`, `string`, or [strongly typed id](https://leancode-corelibrary.readthedocs.io/domain/id/)).
+- `TUserIdExtractor` - class that implements `IUserIdExtractor<TUserId>` interface. It is responsible for extracting user id from the request.
+- `YourDbContext` - db context where feedback will be stored. Remember to point DbContext configured in previous step.
+
+```csharp
+public class Startup : LeanStartup
+{
+    (...)
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services
+            (...)
+            .AddAppRating<TUserId, YourDbContext, TUserIdExtractor>()
+            (...);
+    }
+
+    (...)
+}
+
+public sealed class TUserIdExtractor : IUserIdExtractor<TUserId>
+{
+    public TUserId Extract(HttpContext httpContext)
+    {
+        // implement your own logic to extract user id, eg. from claims
+
+        var claim = context.User.FindFirstValue(Auth.KnownClaims.UserId);
+
+        ArgumentException.ThrowIfNullOrEmpty(claim);
+
+        return TUserId.Parse(claim);
+    }
+}
+```
+
+Configure user role to have `RateApp` permission, e.g.:
+
+```csharp
+internal class AppRoles : IRoleRegistration
+{
+    public IEnumerable<Role> Roles { get; } =
+        [
+            new Role(R.User, R.User, LeanCode.AppRating.Contracts.RatingPermissions.RateApp),
+        ];
+}
+```
+
+### Email configuration
+
+You need to configure `AppRatingReportsConfiguration` in order to define administrative email details. We assume that you have already configured email sending and localization in your application. Ensure that `LowRatingEmailSubjectKey` is defined in your localization files.
+
+```csharp
+    public void ConfigureServices(IServiceCollection services)
+    {
+        (...)
+
+        services.AddSingleton(
+            new AppRatingReportsConfiguration(
+                LowRatingUpperBoundInclusive: 2.0,
+                LowRatingEmailCulture: "en",
+                LowRatingEmailSubjectKey: "emails.low-rate-submitted.subject",
+                FromEmail: "test+from@leancode.pl",
+                ToEmails: ["test+to@leancode.pl", "support@example.app"]
+            )
+        );
+
+        (...)
+    }
+```
+
+You need to configure email templates for low rating reports named `LowRateSubmittedEmail`. You can use those templates as a starting point:
+
+```html
+<h4>One of your users send a low rate. Please log in to your admin panel to check details</h4>
+
+<ul>
+    <li>
+        UserId: @{
+            WriteLiteral(Model.UserId);
+        }
+    </li>
+
+    <li>
+        Rating: @{
+            WriteLiteral(Model.Rating.ToString("F1"));
+        }
+    </li>
+
+    <li>
+        AdditionalComment: @{
+            WriteLiteral(Model.AdditionalComment);
+        }
+    </li>
+</ul>
+```
+
+```csharp
+One of your users send a low rate. Please log in to your admin panel to check details
+
+UserId: @{
+    WriteLiteral(Model.UserId);
+}
+
+Rating: @{
+    WriteLiteral(Model.Rating);
+}
+
+AdditionalComment: @{
+    WriteLiteral(Model.AdditionalComment);
+}
+```
+
+You need to configure MassTransit consumer that will send emails.
+
+```csharp
+    public override void ConfigureServices(IServiceCollection services)
+    {
+        (...)
+
+        services.AddCQRSMassTransitIntegration(cfg =>
+        {
+            (...)
+
+            cfg.AddAppRatingConsumers<TUserId>();
+
+            (...)
+        });
+
+        (...)
+    }
+```
 
 ## Requirements
-**Note:** Debuging this on the emulators or the simulators will not provide the faithful experience of production environment.
+**Note:** Debugging this on the emulators or the simulators will not provide the faithful experience of production environment.
 
-### Android 
+### Android
 - Android 5 or higher
 - Google Play Store must be installed.
 
-### iOS 
+### iOS
 Requires iOS version 10.3
 
 ## Guidelines
