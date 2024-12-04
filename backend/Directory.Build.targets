@@ -1,11 +1,11 @@
 <Project>
   <PropertyGroup>
-    <CoreLibVersion>8.0.2305-preview</CoreLibVersion>
-    <EFCoreVersion>8.0.0</EFCoreVersion>
+    <CoreLibVersion>9.0.2542-preview</CoreLibVersion>
+    <EFCoreVersion>9.0.0</EFCoreVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Update="LeanCode.Contracts" Version="2.0.0-preview.3" />
+    <PackageReference Update="LeanCode.Contracts" Version="2.0.0" />
 
     <PackageReference Update="LeanCode.Components"  Version="$(CoreLibVersion)" />
     <PackageReference Update="LeanCode.CQRS.AspNetCore" Version="$(CoreLibVersion)" />
@@ -19,26 +19,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="FluentValidation" Version="11.5.1" />
-    <PackageReference Update="MassTransit" Version="8.1.1" />
+    <PackageReference Update="FluentValidation" Version="11.11.0" />
+    <PackageReference Update="MassTransit" Version="8.3.2" />
     <PackageReference Update="Microsoft.EntityFrameworkCore" Version="$(EFCoreVersion)" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="$(EFCoreVersion)" />
-    <PackageReference Update="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
-    <PackageReference Update="Serilog" Version="3.0.1" />
+    <PackageReference Update="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.1" />
+    <PackageReference Update="Serilog" Version="4.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-      <PackageReference Update="FluentAssertions" Version="6.12.0" />
-      <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+      <PackageReference Update="FluentAssertions" Version="7.0.0" />
       <PackageReference Update="LeanCode.CQRS.AspNetCore" Version="$(CoreLibVersion)" />
       <PackageReference Update="LeanCode.IntegrationTestHelpers" Version="$(CoreLibVersion)" />
       <PackageReference Update="LeanCode.Startup.MicrosoftDI" Version="$(CoreLibVersion)" />
       <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EFCoreVersion)" />
-      <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.6.0"/>
-      <PackageReference Update="NSubstitute" Version="5.1.0" />
-      <PackageReference Update="xunit" Version="2.5.3" />
-      <PackageReference Update="xunit.runner.visualstudio" Version="2.5.3" />
-      <PackageReference Update="coverlet.collector" Version="6.0.0" />
+      <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.12.0"/>
+      <PackageReference Update="NSubstitute" Version="5.3.0" />
+      <PackageReference Update="xunit" Version="2.9.2" />
+      <PackageReference Update="xunit.runner.visualstudio" Version="2.8.2" />
+      <PackageReference Update="coverlet.collector" Version="6.0.2" />
   </ItemGroup>
 
   <ItemGroup>
