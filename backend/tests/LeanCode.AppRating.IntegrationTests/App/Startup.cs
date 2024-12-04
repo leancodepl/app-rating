@@ -70,7 +70,7 @@ public class Startup : LeanStartup
 
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapRemoteCqrs(
+            endpoints.MapRemoteCQRS(
                 "/api",
                 cqrs =>
                 {
