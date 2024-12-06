@@ -1,6 +1,7 @@
 name: app_rating
 description: >
-  Gather feedback with a 5-star rating or Yes/No survey. Includes device analytics and app store rating prompts for positive reviews.
+  Gather feedback with a 5-star rating or Yes/No survey. Includes device analytics and
+  app store rating prompts for positive reviews.
 repository: https://github.com/leancodepl/app-rating/tree/main/mobile
 version: 0.0.1
 
