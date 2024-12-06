@@ -1,8 +1,8 @@
-name: app_rating
+name: leancode_app_rating
 description: >
   Gather feedback with a 5-star rating or Yes/No survey. Includes device analytics and
   app store rating prompts for positive reviews.
-repository: https://github.com/leancodepl/app-rating/tree/main/mobile
+repository: https://github.com/leancodepl/app-rating
 version: 0.0.1
 
 library:
@@ -30,9 +30,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^2.4.6
+  build_runner: ^2.4.13
   flutter_lints: ^2.0.0
-  freezed: ^2.4.5
+  freezed: ^2.5.7
   leancode_contracts_generator: ^0.12.0
 
 flutter:

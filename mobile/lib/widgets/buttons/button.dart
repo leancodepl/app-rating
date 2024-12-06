@@ -1,4 +1,4 @@
-import 'package:app_rating/widgets/common/text_styles.dart';
+import 'package:leancode_app_rating/widgets/common/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {

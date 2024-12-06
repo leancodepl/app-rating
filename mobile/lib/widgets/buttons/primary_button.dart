@@ -1,4 +1,4 @@
-import 'package:app_rating/widgets/buttons/button.dart';
+import 'package:leancode_app_rating/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {
