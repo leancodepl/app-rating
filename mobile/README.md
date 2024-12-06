@@ -1,4 +1,9 @@
-### Setup
+# leancode_app_rating
+
+[![pub.dev badge][pub-badge]][pub-badge-link]
+[![Build status][build-badge]][build-badge-link]
+
+#### Setup
 
 Add `AppRatingLocalizations` to your localizations delegates in `MaterialApp`"
 ```dart
