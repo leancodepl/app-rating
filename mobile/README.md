@@ -1,7 +1,6 @@
 # leancode_app_rating
 
 [![pub.dev badge][pub-badge]][pub-badge-link]
-[![Build status][build-badge]][build-badge-link]
 
 #### Setup
 
@@ -72,3 +71,6 @@ The showStarDialog function displays a dialog box allowing the user to provide a
 #### Customization
 
 In the current version of this package, you're not able to have a strong impact on how the dialogs look and how the flow works. You can apply your own texts and labels into `showStarDialog` and `showSingleAnswerDialog` methods. But at this moment, that's it.
+
+[pub-badge]: https://img.shields.io/pub/v/leancode_app_rating.svg?logo=dart
+[pub-badge-link]: https://pub.dev/packages/leancode_app_rating
