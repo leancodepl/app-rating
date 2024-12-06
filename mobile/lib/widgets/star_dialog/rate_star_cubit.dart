@@ -1,5 +1,5 @@
-import 'package:app_rating/data/contracts/contracts.dart';
-import 'package:app_rating/utils/platform_info.dart';
+import 'package:leancode_app_rating/data/contracts/contracts.dart';
+import 'package:leancode_app_rating/utils/platform_info.dart';
 import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
