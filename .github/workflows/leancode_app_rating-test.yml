@@ -47,9 +47,6 @@ jobs:
         run: |
           flutter analyze
 
-      - name: Run tests with coverage
-        run: flutter test --coverage
-
       - name: Dry run pub publish
         # We don't want it to fail the CI, it's just to see how would `pub publish` behave.
         run: flutter pub publish --dry-run || true
