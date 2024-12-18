@@ -2,7 +2,7 @@ name: leancode_app_rating publish
 
 on:
   push:
-    tags: ['leancode_app_rating-v*']
+    tags: ["leancode_app_rating-v*"]
 
 jobs:
   publish:
@@ -12,6 +12,7 @@ jobs:
 
     permissions:
       id-token: write
+      contents: write
 
     defaults:
       run:
