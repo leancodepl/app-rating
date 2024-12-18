@@ -77,6 +77,6 @@ In the current version of this package, you're not able to have a strong impact 
 
 [pub-badge-link]: https://pub.dev/packages/leancode_app_rating
 
-[cqrs-build-badge]: https://img.shields.io/github/actions/workflow/status/leancodepl/app-rating/leancode_app_rating-test.yml?branch=main
+[leancode_app_rating-build-badge]: https://img.shields.io/github/actions/workflow/status/leancodepl/app-rating/leancode_app_rating-test.yml?branch=main
 
-[cqrs-build-badge-link]: https://github.com/leancodepl/app-rating/actions/workflows/leancode_app_rating-test.yml
+[leancode_app_rating-build-badge-link]: https://github.com/leancodepl/app-rating/actions/workflows/leancode_app_rating-test.yml
