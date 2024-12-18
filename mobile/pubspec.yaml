@@ -4,7 +4,7 @@ description: >
   app store rating prompts for positive reviews.
 repository: https://github.com/leancodepl/app-rating
 homepage: https://github.com/leancodepl/app-rating/tree/main/mobile
-version: 0.0.1
+version: 0.0.1+1
 
 library:
   - lib/rating.dart
