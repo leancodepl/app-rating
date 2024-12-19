@@ -195,13 +195,15 @@ class RatingStars extends StatelessWidget {
   Widget build(BuildContext context) {
     const selectedStar = Image(
       image: AssetImage(
-        'packages/app_rating/assets/star-selected.png',
+        'assets/star-selected.png',
+        package: 'leancode_app_rating',
       ),
     );
 
     const unSelectedStar = Image(
       image: AssetImage(
-        'packages/app_rating/assets/star-unselected.png',
+        'assets/star-unselected.png',
+        package: 'leancode_app_rating',
       ),
     );
 

@@ -38,5 +38,5 @@ dev_dependencies:
 
 flutter:
   assets:
-    - packages/app_rating/assets/star-selected.png
-    - packages/app_rating/assets/star-unselected.png
+    - assets/star-selected.png
+    - assets/star-unselected.png
