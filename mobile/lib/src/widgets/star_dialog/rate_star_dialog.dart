@@ -1,3 +1,4 @@
+import 'package:leancode_app_rating/src/package_name.dart';
 import 'package:leancode_app_rating/src/utils/platform_info.dart';
 import 'package:leancode_app_rating/src/utils/strings.dart';
 import 'package:leancode_app_rating/src/widgets/common/base_dialog.dart';
@@ -196,14 +197,14 @@ class RatingStars extends StatelessWidget {
     const selectedStar = Image(
       image: AssetImage(
         'assets/star-selected.png',
-        package: 'leancode_app_rating',
+        package: packageName,
       ),
     );
 
     const unSelectedStar = Image(
       image: AssetImage(
         'assets/star-unselected.png',
-        package: 'leancode_app_rating',
+        package: packageName,
       ),
     );
 

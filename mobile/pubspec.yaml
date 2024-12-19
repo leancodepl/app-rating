@@ -6,9 +6,6 @@ repository: https://github.com/leancodepl/app-rating
 homepage: https://github.com/leancodepl/app-rating/tree/main/mobile
 version: 0.0.2
 
-library:
-  - lib/leancode_app_rating.dart
-
 environment:
   sdk: ">=3.4.0 <4.0.0"
   flutter: ">=3.22.0"
