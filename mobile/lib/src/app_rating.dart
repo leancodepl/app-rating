@@ -1,5 +1,5 @@
-import 'package:leancode_app_rating/widgets/single_answer_dialog/single_answer_dialog.dart';
-import 'package:leancode_app_rating/widgets/star_dialog/rate_star_dialog.dart';
+import 'package:leancode_app_rating/src/widgets/single_answer_dialog/single_answer_dialog.dart';
+import 'package:leancode_app_rating/src/widgets/star_dialog/rate_star_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:leancode_contracts/leancode_contracts.dart';

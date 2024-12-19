@@ -4,10 +4,10 @@ description: >
   app store rating prompts for positive reviews.
 repository: https://github.com/leancodepl/app-rating
 homepage: https://github.com/leancodepl/app-rating/tree/main/mobile
-version: 0.0.1+2
+version: 0.0.2
 
 library:
-  - lib/rating.dart
+  - lib/leancode_app_rating.dart
 
 environment:
   sdk: ">=3.4.0 <4.0.0"
@@ -40,4 +40,3 @@ flutter:
   assets:
     - packages/app_rating/assets/star-selected.png
     - packages/app_rating/assets/star-unselected.png
-  generate: true
