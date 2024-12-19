@@ -19,7 +19,7 @@ If the user provides a positive review, they will be kindly asked to rate the ap
 
 #### Setup
 
-Add `AppRatingLocalizations` to your localizations delegates in `MaterialApp`"
+Add `AppRatingLocalizations` to your localizations delegates in `MaterialApp`:
 ```dart
   localizationsDelegates: const [
     (...)

@@ -1,10 +1,11 @@
 # leancode_app_rating
 
 [![pub.dev badge][pub-badge]][pub-badge-link]
+[![][leancode_app_rating-build-badge]][leancode_app_rating-build-badge-link]   
 
 #### Setup
 
-Add `AppRatingLocalizations` to your localizations delegates in `MaterialApp`"
+Add `AppRatingLocalizations` to your localizations delegates in `MaterialApp`:
 ```dart
   localizationsDelegates: const [
     (...)
@@ -75,3 +76,7 @@ In the current version of this package, you're not able to have a strong impact 
 [pub-badge]: https://img.shields.io/pub/v/leancode_app_rating.svg?logo=dart
 
 [pub-badge-link]: https://pub.dev/packages/leancode_app_rating
+
+[leancode_app_rating-build-badge]: https://img.shields.io/github/actions/workflow/status/leancodepl/app-rating/leancode_app_rating-test.yml?branch=main
+
+[leancode_app_rating-build-badge-link]: https://github.com/leancodepl/app-rating/actions/workflows/leancode_app_rating-test.yml

@@ -1,5 +1,5 @@
-import 'package:leancode_app_rating/utils/strings.dart';
-import 'package:leancode_app_rating/widgets/common/text_styles.dart';
+import 'package:leancode_app_rating/src/utils/strings.dart';
+import 'package:leancode_app_rating/src/widgets/common/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:leancode_hooks/leancode_hooks.dart';
 

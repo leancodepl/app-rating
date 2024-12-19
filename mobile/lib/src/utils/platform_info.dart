@@ -1,6 +1,6 @@
 import 'dart:io' show Platform;
 
-import 'package:leancode_app_rating/data/contracts/contracts.dart';
+import 'package:leancode_app_rating/src/data/contracts/contracts.dart';
 
 String get systemVersion => Platform.operatingSystemVersion;
 

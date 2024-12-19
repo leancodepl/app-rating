@@ -1,12 +1,13 @@
-import 'package:leancode_app_rating/utils/platform_info.dart';
-import 'package:leancode_app_rating/utils/strings.dart';
-import 'package:leancode_app_rating/widgets/common/base_dialog.dart';
-import 'package:leancode_app_rating/widgets/buttons/primary_button.dart';
-import 'package:leancode_app_rating/widgets/buttons/secondary_button.dart';
-import 'package:leancode_app_rating/widgets/common/feedback_text_field.dart';
-import 'package:leancode_app_rating/widgets/common/loading_overlay.dart';
-import 'package:leancode_app_rating/widgets/common/text_styles.dart';
-import 'package:leancode_app_rating/widgets/star_dialog/rate_star_cubit.dart';
+import 'package:leancode_app_rating/src/package_name.dart';
+import 'package:leancode_app_rating/src/utils/platform_info.dart';
+import 'package:leancode_app_rating/src/utils/strings.dart';
+import 'package:leancode_app_rating/src/widgets/common/base_dialog.dart';
+import 'package:leancode_app_rating/src/widgets/buttons/primary_button.dart';
+import 'package:leancode_app_rating/src/widgets/buttons/secondary_button.dart';
+import 'package:leancode_app_rating/src/widgets/common/feedback_text_field.dart';
+import 'package:leancode_app_rating/src/widgets/common/loading_overlay.dart';
+import 'package:leancode_app_rating/src/widgets/common/text_styles.dart';
+import 'package:leancode_app_rating/src/widgets/star_dialog/rate_star_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -195,13 +196,15 @@ class RatingStars extends StatelessWidget {
   Widget build(BuildContext context) {
     const selectedStar = Image(
       image: AssetImage(
-        'packages/app_rating/assets/star-selected.png',
+        'assets/star-selected.png',
+        package: packageName,
       ),
     );
 
     const unSelectedStar = Image(
       image: AssetImage(
-        'packages/app_rating/assets/star-unselected.png',
+        'assets/star-unselected.png',
+        package: packageName,
       ),
     );
 
