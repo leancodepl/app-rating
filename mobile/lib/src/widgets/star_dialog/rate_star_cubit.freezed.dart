@@ -19,7 +19,7 @@ mixin _$RatingState {
   int get rating => throw _privateConstructorUsedError;
   bool get inProgress => throw _privateConstructorUsedError;
   bool get expanded => throw _privateConstructorUsedError;
-  bool get rateUs => throw _privateConstructorUsedError;
+  bool get rated => throw _privateConstructorUsedError;
 
   /// Create a copy of RatingState
   /// with the given fields replaced by the non-null parameter values.
@@ -34,7 +34,7 @@ abstract class $RatingStateCopyWith<$Res> {
           RatingState value, $Res Function(RatingState) then) =
       _$RatingStateCopyWithImpl<$Res, RatingState>;
   @useResult
-  $Res call({int rating, bool inProgress, bool expanded, bool rateUs});
+  $Res call({int rating, bool inProgress, bool expanded, bool rated});
 }
 
 /// @nodoc
@@ -55,7 +55,7 @@ class _$RatingStateCopyWithImpl<$Res, $Val extends RatingState>
     Object? rating = null,
     Object? inProgress = null,
     Object? expanded = null,
-    Object? rateUs = null,
+    Object? rated = null,
   }) {
     return _then(_value.copyWith(
       rating: null == rating
@@ -70,9 +70,9 @@ class _$RatingStateCopyWithImpl<$Res, $Val extends RatingState>
           ? _value.expanded
           : expanded // ignore: cast_nullable_to_non_nullable
               as bool,
-      rateUs: null == rateUs
-          ? _value.rateUs
-          : rateUs // ignore: cast_nullable_to_non_nullable
+      rated: null == rated
+          ? _value.rated
+          : rated // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -86,7 +86,7 @@ abstract class _$$RatingStateImplCopyWith<$Res>
       __$$RatingStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int rating, bool inProgress, bool expanded, bool rateUs});
+  $Res call({int rating, bool inProgress, bool expanded, bool rated});
 }
 
 /// @nodoc
@@ -105,7 +105,7 @@ class __$$RatingStateImplCopyWithImpl<$Res>
     Object? rating = null,
     Object? inProgress = null,
     Object? expanded = null,
-    Object? rateUs = null,
+    Object? rated = null,
   }) {
     return _then(_$RatingStateImpl(
       rating: null == rating
@@ -120,9 +120,9 @@ class __$$RatingStateImplCopyWithImpl<$Res>
           ? _value.expanded
           : expanded // ignore: cast_nullable_to_non_nullable
               as bool,
-      rateUs: null == rateUs
-          ? _value.rateUs
-          : rateUs // ignore: cast_nullable_to_non_nullable
+      rated: null == rated
+          ? _value.rated
+          : rated // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -135,7 +135,7 @@ class _$RatingStateImpl implements _RatingState {
       {this.rating = 0,
       this.inProgress = false,
       this.expanded = false,
-      this.rateUs = false});
+      this.rated = false});
 
   @override
   @JsonKey()
@@ -148,11 +148,11 @@ class _$RatingStateImpl implements _RatingState {
   final bool expanded;
   @override
   @JsonKey()
-  final bool rateUs;
+  final bool rated;
 
   @override
   String toString() {
-    return 'RatingState(rating: $rating, inProgress: $inProgress, expanded: $expanded, rateUs: $rateUs)';
+    return 'RatingState(rating: $rating, inProgress: $inProgress, expanded: $expanded, rated: $rated)';
   }
 
   @override
@@ -165,12 +165,12 @@ class _$RatingStateImpl implements _RatingState {
                 other.inProgress == inProgress) &&
             (identical(other.expanded, expanded) ||
                 other.expanded == expanded) &&
-            (identical(other.rateUs, rateUs) || other.rateUs == rateUs));
+            (identical(other.rated, rated) || other.rated == rated));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, rating, inProgress, expanded, rateUs);
+      Object.hash(runtimeType, rating, inProgress, expanded, rated);
 
   /// Create a copy of RatingState
   /// with the given fields replaced by the non-null parameter values.
@@ -186,7 +186,7 @@ abstract class _RatingState implements RatingState {
       {final int rating,
       final bool inProgress,
       final bool expanded,
-      final bool rateUs}) = _$RatingStateImpl;
+      final bool rated}) = _$RatingStateImpl;
 
   @override
   int get rating;
@@ -195,7 +195,7 @@ abstract class _RatingState implements RatingState {
   @override
   bool get expanded;
   @override
-  bool get rateUs;
+  bool get rated;
 
   /// Create a copy of RatingState
   /// with the given fields replaced by the non-null parameter values.
