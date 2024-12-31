@@ -57,7 +57,6 @@ class RatingCubit extends Cubit<RatingState>
 abstract class RatingState with _$RatingState {
   const factory RatingState({
     @Default(0) int rating,
-    @Default(false) bool inProgress,
     @Default(false) bool expanded,
     @Default(false) bool rated,
   }) = _RatingState;

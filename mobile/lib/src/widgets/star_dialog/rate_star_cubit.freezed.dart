@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$RatingState {
   int get rating => throw _privateConstructorUsedError;
-  bool get inProgress => throw _privateConstructorUsedError;
   bool get expanded => throw _privateConstructorUsedError;
   bool get rated => throw _privateConstructorUsedError;
 
@@ -34,7 +33,7 @@ abstract class $RatingStateCopyWith<$Res> {
           RatingState value, $Res Function(RatingState) then) =
       _$RatingStateCopyWithImpl<$Res, RatingState>;
   @useResult
-  $Res call({int rating, bool inProgress, bool expanded, bool rated});
+  $Res call({int rating, bool expanded, bool rated});
 }
 
 /// @nodoc
@@ -53,7 +52,6 @@ class _$RatingStateCopyWithImpl<$Res, $Val extends RatingState>
   @override
   $Res call({
     Object? rating = null,
-    Object? inProgress = null,
     Object? expanded = null,
     Object? rated = null,
   }) {
@@ -62,10 +60,6 @@ class _$RatingStateCopyWithImpl<$Res, $Val extends RatingState>
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as int,
-      inProgress: null == inProgress
-          ? _value.inProgress
-          : inProgress // ignore: cast_nullable_to_non_nullable
-              as bool,
       expanded: null == expanded
           ? _value.expanded
           : expanded // ignore: cast_nullable_to_non_nullable
@@ -86,7 +80,7 @@ abstract class _$$RatingStateImplCopyWith<$Res>
       __$$RatingStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int rating, bool inProgress, bool expanded, bool rated});
+  $Res call({int rating, bool expanded, bool rated});
 }
 
 /// @nodoc
@@ -103,7 +97,6 @@ class __$$RatingStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? rating = null,
-    Object? inProgress = null,
     Object? expanded = null,
     Object? rated = null,
   }) {
@@ -112,10 +105,6 @@ class __$$RatingStateImplCopyWithImpl<$Res>
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as int,
-      inProgress: null == inProgress
-          ? _value.inProgress
-          : inProgress // ignore: cast_nullable_to_non_nullable
-              as bool,
       expanded: null == expanded
           ? _value.expanded
           : expanded // ignore: cast_nullable_to_non_nullable
@@ -132,17 +121,11 @@ class __$$RatingStateImplCopyWithImpl<$Res>
 
 class _$RatingStateImpl implements _RatingState {
   const _$RatingStateImpl(
-      {this.rating = 0,
-      this.inProgress = false,
-      this.expanded = false,
-      this.rated = false});
+      {this.rating = 0, this.expanded = false, this.rated = false});
 
   @override
   @JsonKey()
   final int rating;
-  @override
-  @JsonKey()
-  final bool inProgress;
   @override
   @JsonKey()
   final bool expanded;
@@ -152,7 +135,7 @@ class _$RatingStateImpl implements _RatingState {
 
   @override
   String toString() {
-    return 'RatingState(rating: $rating, inProgress: $inProgress, expanded: $expanded, rated: $rated)';
+    return 'RatingState(rating: $rating, expanded: $expanded, rated: $rated)';
   }
 
   @override
@@ -161,16 +144,13 @@ class _$RatingStateImpl implements _RatingState {
         (other.runtimeType == runtimeType &&
             other is _$RatingStateImpl &&
             (identical(other.rating, rating) || other.rating == rating) &&
-            (identical(other.inProgress, inProgress) ||
-                other.inProgress == inProgress) &&
             (identical(other.expanded, expanded) ||
                 other.expanded == expanded) &&
             (identical(other.rated, rated) || other.rated == rated));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, rating, inProgress, expanded, rated);
+  int get hashCode => Object.hash(runtimeType, rating, expanded, rated);
 
   /// Create a copy of RatingState
   /// with the given fields replaced by the non-null parameter values.
@@ -184,14 +164,11 @@ class _$RatingStateImpl implements _RatingState {
 abstract class _RatingState implements RatingState {
   const factory _RatingState(
       {final int rating,
-      final bool inProgress,
       final bool expanded,
       final bool rated}) = _$RatingStateImpl;
 
   @override
   int get rating;
-  @override
-  bool get inProgress;
   @override
   bool get expanded;
   @override
