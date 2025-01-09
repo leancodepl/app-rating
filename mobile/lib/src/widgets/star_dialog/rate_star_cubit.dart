@@ -31,22 +31,25 @@ class RatingCubit extends Cubit<RatingState>
     inAppReview.openStoreListing(
       appStoreId: appStoreId,
     );
+
     emitPresentation(const CloseDialogEvent());
   }
 
-  Future<void> submit({String? additionalComment}) async {
-    emit(state.copyWith(inProgress: true));
-    await cqrs.run(
-      SubmitAppRating(
-        rating: state.rating.toDouble(),
-        metadata: {},
-        platform: operatingSystem,
-        systemVersion: systemVersion,
-        appVersion: appVersion,
-        additionalComment: additionalComment,
-      ),
-    );
-    emit(state.copyWith(inProgress: false, rateUs: true));
+  void submit({String? additionalComment}) {
+    emit(state.copyWith(rated: true));
+
+    cqrs
+        .run(
+          SubmitAppRating(
+            rating: state.rating.toDouble(),
+            metadata: {},
+            platform: operatingSystem,
+            systemVersion: systemVersion,
+            appVersion: appVersion,
+            additionalComment: additionalComment,
+          ),
+        )
+        .ignore();
   }
 }
 
@@ -54,9 +57,8 @@ class RatingCubit extends Cubit<RatingState>
 abstract class RatingState with _$RatingState {
   const factory RatingState({
     @Default(0) int rating,
-    @Default(false) bool inProgress,
     @Default(false) bool expanded,
-    @Default(false) bool rateUs,
+    @Default(false) bool rated,
   }) = _RatingState;
 }
 

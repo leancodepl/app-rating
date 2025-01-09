@@ -69,9 +69,27 @@ void showStarDialog(
 
 The showStarDialog function displays a dialog box allowing the user to provide a star rating. If the user rates the app with fewer than 5 stars, the dialog expands to include a text field for additional comments. For high ratings (5 stars), the dialog changes its appearance by showing a button that directs the user to the app store to submit a review.
 
-#### Customization
+#### Customizable five star rating dialog
 
-In the current version of this package, you're not able to have a strong impact on how the dialogs look and how the flow works. You can apply your own texts and labels into `showStarDialog` and `showSingleAnswerDialog` methods. But at this moment, that's it.
+```dart
+ void showCustomizableStarDialog(
+BuildContext context, {
+required WidgetBuilder headerBuilder,
+required WidgetBuilder subtitleBuilder,
+required ButtonBuilder primaryButtonBuilder,
+required ButtonBuilder secondaryButtonBuilder,
+required RatedWidgetBuilder ratedHeaderBuilder,
+required RatedWidgetBuilder ratedSubtitleBuilder,
+required RatedButtonBuilder ratedPrimaryButtonBuilder,
+required RatedButtonBuilder ratedSecondaryButtonBuilder,
+required TextFieldBuilder additionalCommentBuilder,
+required RatingBuilder ratingBuilder,
+EdgeInsets padding = EdgeInsets.zero,
+})
+```
+The showCustomizableStarDialog function enables customization of the star rating flow. Texts, buttons, the text field for additional comments, and the rating widget are all fully customizable.
+
+To replicate the behavior of the showStarDialog function, ensure that you call the onPressed functions for the button builders. In this flow, all secondary buttons terminate the rating process and close the dialog. The primary buttons have distinct behaviors: the primary button in the first dialog leads the user to the second dialog, while the primary button in the second dialog redirects the user to the app store to submit a review.
 
 [pub-badge]: https://img.shields.io/pub/v/leancode_app_rating.svg?logo=dart
 

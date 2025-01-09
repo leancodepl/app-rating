@@ -1,18 +1,36 @@
-import 'package:leancode_app_rating/src/package_name.dart';
-import 'package:leancode_app_rating/src/utils/platform_info.dart';
-import 'package:leancode_app_rating/src/utils/strings.dart';
 import 'package:leancode_app_rating/src/widgets/common/base_dialog.dart';
-import 'package:leancode_app_rating/src/widgets/buttons/primary_button.dart';
-import 'package:leancode_app_rating/src/widgets/buttons/secondary_button.dart';
-import 'package:leancode_app_rating/src/widgets/common/feedback_text_field.dart';
-import 'package:leancode_app_rating/src/widgets/common/loading_overlay.dart';
-import 'package:leancode_app_rating/src/widgets/common/text_styles.dart';
 import 'package:leancode_app_rating/src/widgets/star_dialog/rate_star_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:leancode_contracts/leancode_contracts.dart';
 import 'package:leancode_hooks/leancode_hooks.dart';
+
+typedef ButtonBuilder = Widget Function(
+  BuildContext context, {
+  required VoidCallback onPressed,
+});
+
+typedef TextFieldBuilder = Widget Function(
+  BuildContext context,
+  TextEditingController textController,
+);
+
+typedef RatingBuilder = Widget Function(
+  BuildContext context, {
+  required ValueChanged<int> onChanged,
+});
+
+typedef RatedWidgetBuilder = Widget Function(
+  BuildContext context,
+  int rating,
+);
+
+typedef RatedButtonBuilder = Widget? Function(
+  BuildContext context,
+  int rating, {
+  required VoidCallback onPressed,
+});
 
 class RateStarDialog extends HookWidget {
   const RateStarDialog({
@@ -21,33 +39,37 @@ class RateStarDialog extends HookWidget {
     required this.inAppReview,
     required this.appleStoreId,
     required this.appVersion,
-    this.starDialogHeader,
-    this.starDialogSubtitle,
-    this.starDialogPrimaryButton,
-    this.starDialogSecondaryButton,
-    this.starDialogRateUsHeader,
-    this.starDialogRateUsSubtitle,
-    this.starDialogOpenStoreButton,
-    this.starDialogOpenStoreCloseButton,
+    required this.headerBuilder,
+    required this.subtitleBuilder,
+    required this.primaryButtonBuilder,
+    required this.secondaryButtonBuilder,
+    required this.ratedHeaderBuilder,
+    required this.ratedSubtitleBuilder,
+    required this.ratedPrimaryButtonBuilder,
+    required this.ratedSecondaryButtonBuilder,
+    required this.additionalCommentBuilder,
+    required this.ratingBuilder,
+    required this.padding,
   });
 
   final Cqrs cqrs;
   final InAppReview inAppReview;
   final String appleStoreId;
   final String appVersion;
-  final String? starDialogHeader;
-  final String? starDialogSubtitle;
-  final String? starDialogPrimaryButton;
-  final String? starDialogSecondaryButton;
-  final String? starDialogRateUsHeader;
-  final String? starDialogRateUsSubtitle;
-  final String? starDialogOpenStoreButton;
-  final String? starDialogOpenStoreCloseButton;
+  final WidgetBuilder headerBuilder;
+  final WidgetBuilder subtitleBuilder;
+  final ButtonBuilder primaryButtonBuilder;
+  final ButtonBuilder secondaryButtonBuilder;
+  final RatedWidgetBuilder ratedHeaderBuilder;
+  final RatedWidgetBuilder ratedSubtitleBuilder;
+  final RatedButtonBuilder ratedPrimaryButtonBuilder;
+  final RatedButtonBuilder ratedSecondaryButtonBuilder;
+  final TextFieldBuilder additionalCommentBuilder;
+  final RatingBuilder ratingBuilder;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
-    final s = l10n(context);
-
     final rateCubit = useBloc<RatingCubit>(
       () => RatingCubit(
         cqrs: cqrs,
@@ -66,171 +88,142 @@ class RateStarDialog extends HookWidget {
     final textController = useTextEditingController();
 
     return BaseDialog(
-      child: BlocBuilder<RatingCubit, RatingState>(
-        bloc: rateCubit,
-        builder: (context, state) {
-          if (state.rateUs) {
-            return RateUsInStore(
-              rateCubit: rateCubit,
-              starDialogOpenStoreButton: starDialogOpenStoreButton,
-              starDialogOpenStoreCloseButton: starDialogOpenStoreCloseButton,
-              starDialogRateUsHeader: starDialogRateUsHeader,
-              starDialogRateUsSubtitle: starDialogRateUsSubtitle,
-            );
-          }
-          return AppLoadingOverlay(
-            isLoading: state.inProgress,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    starDialogHeader ?? s.starDialogHeader,
-                    softWrap: true,
-                    style: headerStyle,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    starDialogSubtitle ?? s.starDialogSubtitle,
-                    style: subtitleTextStyle,
-                  ),
-                  const SizedBox(height: 24),
-                  RatingStars(ratingCubit: rateCubit),
-                  const SizedBox(height: 24),
-                  if (state.expanded)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 24),
-                      child: FeedbackTextField(
-                        textController: textController,
-                      ),
-                    ),
-                  PrimaryButton(
-                    label: starDialogPrimaryButton ?? s.starDialogPrimaryButton,
-                    onPressed: () {
-                      rateCubit.submit(
-                        additionalComment: textController.text,
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  SecondaryButton(
-                    label: starDialogSecondaryButton ??
-                        s.starDialogSecondaryButton,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
+      child: Padding(
+        padding: padding,
+        child: BlocBuilder<RatingCubit, RatingState>(
+          bloc: rateCubit,
+          builder: (context, state) {
+            if (state.rated) {
+              return _Rated(
+                rating: state.rating,
+                rateCubit: rateCubit,
+                headerBuilder: ratedHeaderBuilder,
+                subtitleBuilder: ratedSubtitleBuilder,
+                primaryButtonBuilder: ratedPrimaryButtonBuilder,
+                secondaryButtonBuilder: ratedSecondaryButtonBuilder,
+              );
+            } else {
+              return _NotRatedYet(
+                headerBuilder: headerBuilder,
+                subtitleBuilder: subtitleBuilder,
+                ratingBuilder: ratingBuilder,
+                rateCubit: rateCubit,
+                additionalCommentBuilder: additionalCommentBuilder,
+                textController: textController,
+                primaryButtonBuilder: primaryButtonBuilder,
+                secondaryButtonBuilder: secondaryButtonBuilder,
+                expanded: state.expanded,
+              );
+            }
+          },
+        ),
       ),
     );
   }
 }
 
-class RateUsInStore extends StatelessWidget {
-  const RateUsInStore({
-    super.key,
+class _NotRatedYet extends StatelessWidget {
+  const _NotRatedYet({
+    required this.headerBuilder,
+    required this.subtitleBuilder,
+    required this.ratingBuilder,
     required this.rateCubit,
-    this.starDialogRateUsHeader,
-    this.starDialogRateUsSubtitle,
-    this.starDialogOpenStoreButton,
-    this.starDialogOpenStoreCloseButton,
+    required this.additionalCommentBuilder,
+    required this.textController,
+    required this.primaryButtonBuilder,
+    required this.secondaryButtonBuilder,
+    required this.expanded,
   });
 
+  final WidgetBuilder headerBuilder;
+  final WidgetBuilder subtitleBuilder;
+  final RatingBuilder ratingBuilder;
   final RatingCubit rateCubit;
-  final String? starDialogRateUsHeader;
-  final String? starDialogRateUsSubtitle;
-  final String? starDialogOpenStoreButton;
-  final String? starDialogOpenStoreCloseButton;
+  final TextFieldBuilder additionalCommentBuilder;
+  final TextEditingController textController;
+  final ButtonBuilder primaryButtonBuilder;
+  final ButtonBuilder secondaryButtonBuilder;
+  final bool expanded;
 
   @override
   Widget build(BuildContext context) {
-    final s = l10n(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            starDialogRateUsHeader ?? s.starDialogRateUsHeader,
-            softWrap: true,
-            style: headerStyle,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        headerBuilder(context),
+        const SizedBox(height: 8),
+        subtitleBuilder(context),
+        const SizedBox(height: 24),
+        ratingBuilder(context, onChanged: rateCubit.setRating),
+        const SizedBox(height: 24),
+        if (expanded)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 24),
+            child: additionalCommentBuilder(context, textController),
           ),
-          const SizedBox(height: 8),
-          Text(
-            starDialogRateUsSubtitle ??
-                s.starDialogRateUsSubtitle(getStoreName),
-            textAlign: TextAlign.center,
-            style: subtitleTextStyle,
-          ),
-          const SizedBox(height: 24),
-          PrimaryButton(
-            label: starDialogOpenStoreButton ??
-                s.starDialogOpenStoreButton(getStoreName),
-            onPressed: rateCubit.openStore,
-          ),
-          const SizedBox(height: 8),
-          SecondaryButton(
-            label: starDialogOpenStoreCloseButton ??
-                s.starDialogOpenStoreCloseButton,
-            onPressed: Navigator.of(context).pop,
-          ),
-        ],
-      ),
+        primaryButtonBuilder(
+          context,
+          onPressed: () {
+            rateCubit.submit(
+              additionalComment: textController.text,
+            );
+          },
+        ),
+        const SizedBox(height: 8),
+        secondaryButtonBuilder(
+          context,
+          onPressed: Navigator.of(context).pop,
+        ),
+      ],
     );
   }
 }
 
-class RatingStars extends StatelessWidget {
-  const RatingStars({Key? key, required this.ratingCubit}) : super(key: key);
+class _Rated extends StatelessWidget {
+  const _Rated({
+    required this.rating,
+    required this.rateCubit,
+    required this.headerBuilder,
+    required this.subtitleBuilder,
+    required this.primaryButtonBuilder,
+    required this.secondaryButtonBuilder,
+  });
 
-  final RatingCubit ratingCubit;
+  final int rating;
+  final RatingCubit rateCubit;
+  final RatedWidgetBuilder headerBuilder;
+  final RatedWidgetBuilder subtitleBuilder;
+  final RatedButtonBuilder primaryButtonBuilder;
+  final RatedButtonBuilder secondaryButtonBuilder;
 
   @override
   Widget build(BuildContext context) {
-    const selectedStar = Image(
-      image: AssetImage(
-        'assets/star-selected.png',
-        package: packageName,
-      ),
+    final primaryButton = primaryButtonBuilder(
+      context,
+      rating,
+      onPressed: rateCubit.openStore,
+    );
+    final secondaryButton = secondaryButtonBuilder(
+      context,
+      rating,
+      onPressed: Navigator.of(context).pop,
     );
 
-    const unSelectedStar = Image(
-      image: AssetImage(
-        'assets/star-unselected.png',
-        package: packageName,
-      ),
-    );
-
-    return BlocBuilder<RatingCubit, RatingState>(
-      bloc: ratingCubit,
-      builder: (context, state) {
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: List.generate(
-            5,
-            (index) {
-              return GestureDetector(
-                onTap: () {
-                  ratingCubit.setRating(index + 1);
-                },
-                child: Padding(
-                  padding: index < 5
-                      ? const EdgeInsets.only(right: 24)
-                      : EdgeInsets.zero,
-                  child: state.rating > index ? selectedStar : unSelectedStar,
-                ),
-              );
-            },
-          ),
-        );
-      },
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        headerBuilder(context, rating),
+        const SizedBox(height: 8),
+        subtitleBuilder(context, rating),
+        if (primaryButton != null) ...[
+          const SizedBox(height: 24),
+          primaryButton,
+        ],
+        if (secondaryButton != null) ...[
+          SizedBox(height: primaryButton != null ? 8 : 24),
+          secondaryButton,
+        ],
+      ],
     );
   }
 }

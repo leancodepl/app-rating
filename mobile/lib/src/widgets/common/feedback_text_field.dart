@@ -27,10 +27,7 @@ class FeedbackTextField extends HookWidget {
         AnimatedOpacity(
           opacity: showLabel.value ? 1 : 0,
           duration: const Duration(milliseconds: 60),
-          child: Text(
-            s.textFieldHint,
-            style: hintTextStyle
-          ),
+          child: Text(s.textFieldHint, style: hintTextStyle),
         ),
         const SizedBox(height: 4),
         TextField(

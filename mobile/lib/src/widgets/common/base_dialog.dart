@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class BaseDialog extends StatelessWidget {
   const BaseDialog({super.key, required this.child});
 
-
   final Widget child;
 
   @override
