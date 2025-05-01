@@ -38,14 +38,11 @@ class AppButton extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    label,
-                    style: buttonTextStyle(textColor),
-                  ),
-                ],
+              child: Center(
+                child: Text(
+                  label,
+                  style: buttonTextStyle(textColor),
+                ),
               ),
             ),
           ),
