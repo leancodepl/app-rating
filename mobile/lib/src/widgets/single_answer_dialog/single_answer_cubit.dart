@@ -1,9 +1,9 @@
-import 'package:leancode_app_rating/src/data/contracts/contracts.dart';
-import 'package:leancode_app_rating/src/utils/platform_info.dart';
-import 'package:leancode_app_rating/src/widgets/single_answer_dialog/options_enum.dart';
 import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:leancode_app_rating/src/data/contracts/contracts.dart';
+import 'package:leancode_app_rating/src/utils/platform_info.dart';
+import 'package:leancode_app_rating/src/widgets/single_answer_dialog/options_enum.dart';
 import 'package:leancode_contracts/leancode_contracts.dart';
 
 class SingleAnswerCubit extends Cubit<AnswerState>
@@ -50,10 +50,9 @@ class SingleAnswerCubit extends Cubit<AnswerState>
         );
         emit(state.copyWith(inProgress: false));
         if (await inAppReview.isAvailable()) {
-          inAppReview.requestReview();
+          await inAppReview.requestReview();
         }
         emitPresentation(const CloseDialogEvent());
-        break;
 
       case RateOptions.no:
         emit(state.copyWith(expanded: true));

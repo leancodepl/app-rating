@@ -1,5 +1,5 @@
-import 'package:leancode_app_rating/src/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
+import 'package:leancode_app_rating/src/widgets/buttons/button.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({super.key, required this.label, this.onPressed});

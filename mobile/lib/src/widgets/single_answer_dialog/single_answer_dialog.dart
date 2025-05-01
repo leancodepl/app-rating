@@ -1,15 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:leancode_app_rating/src/utils/strings.dart';
-import 'package:leancode_app_rating/src/widgets/common/base_dialog.dart';
 import 'package:leancode_app_rating/src/widgets/buttons/primary_button.dart';
 import 'package:leancode_app_rating/src/widgets/buttons/secondary_button.dart';
+import 'package:leancode_app_rating/src/widgets/common/base_dialog.dart';
 import 'package:leancode_app_rating/src/widgets/common/feedback_text_field.dart';
 import 'package:leancode_app_rating/src/widgets/common/loading_overlay.dart';
 import 'package:leancode_app_rating/src/widgets/common/text_styles.dart';
 import 'package:leancode_app_rating/src/widgets/single_answer_dialog/options_enum.dart';
 import 'package:leancode_app_rating/src/widgets/single_answer_dialog/single_answer_cubit.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:in_app_review/in_app_review.dart';
 import 'package:leancode_contracts/leancode_contracts.dart';
 import 'package:leancode_hooks/leancode_hooks.dart';
 
@@ -52,11 +52,14 @@ class SingleAnswerDialog extends HookWidget {
     );
     final textFieldController = useTextEditingController();
 
-    useOnStreamChange(answerCubit.presentation, onData: (event) {
-      if (event is CloseDialogEvent) {
-        Navigator.of(context).pop();
-      }
-    });
+    useOnStreamChange(
+      answerCubit.presentation,
+      onData: (event) {
+        if (event is CloseDialogEvent) {
+          Navigator.of(context).pop();
+        }
+      },
+    );
 
     return BaseDialog(
       child: BlocBuilder<SingleAnswerCubit, AnswerState>(
