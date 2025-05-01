@@ -14,8 +14,5 @@ String get getStoreName {
   if (Platform.isIOS || Platform.isMacOS) {
     return 'App Store';
   }
-  if (Platform.isMacOS) {
-    return 'Microsoft Store';
-  }
   return '';
 }
