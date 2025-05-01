@@ -2,11 +2,8 @@ import 'package:leancode_app_rating/src/data/contracts/contracts.dart';
 import 'package:leancode_app_rating/src/utils/platform_info.dart';
 import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:leancode_contracts/leancode_contracts.dart';
-
-part 'rate_star_cubit.freezed.dart';
 
 class RatingCubit extends Cubit<RatingState>
     with BlocPresentationMixin<RatingState, RatingCubitEvent> {
@@ -53,13 +50,30 @@ class RatingCubit extends Cubit<RatingState>
   }
 }
 
-@freezed
-abstract class RatingState with _$RatingState {
-  const factory RatingState({
-    @Default(0) int rating,
-    @Default(false) bool expanded,
-    @Default(false) bool rated,
-  }) = _RatingState;
+class RatingState with EquatableMixin {
+  const RatingState({
+    this.rating = 0,
+    this.expanded = false,
+    this.rated = false,
+  });
+
+  final int rating;
+  final bool expanded;
+  final bool rated;
+
+  RatingState copyWith({
+    int? rating,
+    bool? expanded,
+    bool? rated,
+  }) =>
+      RatingState(
+        rating: rating ?? this.rating,
+        expanded: expanded ?? this.expanded,
+        rated: rated ?? this.rated,
+      );
+
+  @override
+  List<Object?> get props => [rating, expanded, rated];
 }
 
 sealed class RatingCubitEvent {}
