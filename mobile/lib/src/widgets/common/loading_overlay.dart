@@ -33,7 +33,6 @@ class AppLoadingOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      fit: StackFit.loose,
       alignment: Alignment.center,
       children: [
         Opacity(

@@ -1,7 +1,7 @@
-import 'package:leancode_app_rating/src/widgets/single_answer_dialog/single_answer_dialog.dart';
-import 'package:leancode_app_rating/src/widgets/star_dialog/rate_star_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:leancode_app_rating/src/widgets/single_answer_dialog/single_answer_dialog.dart';
+import 'package:leancode_app_rating/src/widgets/star_dialog/rate_star_dialog.dart';
 import 'package:leancode_app_rating/src/widgets/star_dialog/simple_rate_star_dialog.dart';
 import 'package:leancode_contracts/leancode_contracts.dart';
 
@@ -28,7 +28,7 @@ class AppRating {
     String? starDialogOpenStoreButton,
     String? starDialogOpenStoreCloseButton,
   }) {
-    showDialog(
+    showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (ctx) => SimpleRateStarDialog(
@@ -58,7 +58,7 @@ class AppRating {
     String? singleAnswerDialogMoreInfoPrimaryButton,
     String? singleAnswerDialogMoreInfoSecondaryButton,
   }) {
-    showDialog(
+    showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (ctx) => SingleAnswerDialog(
@@ -92,7 +92,7 @@ class AppRating {
     required RatingBuilder ratingBuilder,
     EdgeInsets padding = EdgeInsets.zero,
   }) {
-    showDialog(
+    showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (ctx) => RateStarDialog(

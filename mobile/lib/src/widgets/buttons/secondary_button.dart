@@ -1,5 +1,5 @@
-import 'package:leancode_app_rating/src/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
+import 'package:leancode_app_rating/src/widgets/buttons/button.dart';
 
 class SecondaryButton extends StatelessWidget {
   const SecondaryButton({

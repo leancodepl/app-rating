@@ -34,7 +34,7 @@ Map<String, dynamic> _$SubmitAppRatingToJson(SubmitAppRating instance) =>
     <String, dynamic>{
       'Rating': instance.rating,
       'AdditionalComment': instance.additionalComment,
-      'Platform': _$PlatformDTOEnumMap[instance.platform]!,
+      'Platform': _$PlatformDTOEnumMap[instance.platform],
       'SystemVersion': instance.systemVersion,
       'AppVersion': instance.appVersion,
       'Metadata': instance.metadata,

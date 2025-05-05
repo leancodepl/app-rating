@@ -48,3 +48,6 @@ mason-lock.json
 
 # Patrol related
 integration_test/test_bundle.dart
+
+# FVM Version Cache
+.fvm/

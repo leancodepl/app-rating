@@ -1,8 +1,8 @@
-import 'package:leancode_app_rating/src/widgets/common/base_dialog.dart';
-import 'package:leancode_app_rating/src/widgets/star_dialog/rate_star_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:leancode_app_rating/src/widgets/common/base_dialog.dart';
+import 'package:leancode_app_rating/src/widgets/star_dialog/rate_star_cubit.dart';
 import 'package:leancode_contracts/leancode_contracts.dart';
 import 'package:leancode_hooks/leancode_hooks.dart';
 
@@ -79,11 +79,15 @@ class RateStarDialog extends HookWidget {
       ),
     );
 
-    useOnStreamChange(rateCubit.presentation, onData: (event) {
-      if (event is CloseDialogEvent) {
-        Navigator.of(context).pop();
-      }
-    });
+    useOnStreamChange(
+      rateCubit.presentation,
+      onData: (event) {
+        switch (event) {
+          case CloseDialogEvent():
+            Navigator.of(context).pop();
+        }
+      },
+    );
 
     final textController = useTextEditingController();
 
