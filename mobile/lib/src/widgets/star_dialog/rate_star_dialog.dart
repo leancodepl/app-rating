@@ -82,8 +82,9 @@ class RateStarDialog extends HookWidget {
     useOnStreamChange(
       rateCubit.presentation,
       onData: (event) {
-        if (event is CloseDialogEvent) {
-          Navigator.of(context).pop();
+        switch (event) {
+          case CloseDialogEvent():
+            Navigator.of(context).pop();
         }
       },
     );
