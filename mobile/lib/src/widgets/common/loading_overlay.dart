@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppProgressIndicator extends StatelessWidget {
-  const AppProgressIndicator({
-    super.key,
-    this.size = 32,
-  });
+  const AppProgressIndicator({super.key, this.size = 32});
 
   final double size;
 

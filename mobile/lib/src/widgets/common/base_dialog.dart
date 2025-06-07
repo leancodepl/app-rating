@@ -10,9 +10,7 @@ class BaseDialog extends StatelessWidget {
     return Dialog(
       elevation: 0,
       insetPadding: const EdgeInsets.symmetric(horizontal: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: child,
     );
   }

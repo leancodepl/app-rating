@@ -4,10 +4,7 @@ import 'package:leancode_app_rating/src/widgets/common/text_styles.dart';
 import 'package:leancode_hooks/leancode_hooks.dart';
 
 class FeedbackTextField extends HookWidget {
-  const FeedbackTextField({
-    super.key,
-    required this.textController,
-  });
+  const FeedbackTextField({super.key, required this.textController});
 
   final TextEditingController textController;
 

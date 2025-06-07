@@ -40,7 +40,4 @@ Map<String, dynamic> _$SubmitAppRatingToJson(SubmitAppRating instance) =>
       'Metadata': instance.metadata,
     };
 
-const _$PlatformDTOEnumMap = {
-  PlatformDTO.android: 0,
-  PlatformDTO.ios: 1,
-};
+const _$PlatformDTOEnumMap = {PlatformDTO.android: 0, PlatformDTO.ios: 1};
