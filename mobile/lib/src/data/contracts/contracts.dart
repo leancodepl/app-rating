@@ -7,7 +7,7 @@ enum PlatformDTO {
   @JsonValue(0)
   android,
   @JsonValue(1)
-  ios
+  ios,
 }
 
 /// LeanCode.Contracts.Security.AuthorizeWhenHasAnyOfAttribute('RateApp')
@@ -69,13 +69,13 @@ class SubmitAppRating with EquatableMixin implements Command {
   final Map<String, Object>? metadata;
 
   List<Object?> get props => [
-        rating,
-        additionalComment,
-        platform,
-        systemVersion,
-        appVersion,
-        metadata
-      ];
+    rating,
+    additionalComment,
+    platform,
+    systemVersion,
+    appVersion,
+    metadata,
+  ];
 
   Map<String, dynamic> toJson() => _$SubmitAppRatingToJson(this);
 

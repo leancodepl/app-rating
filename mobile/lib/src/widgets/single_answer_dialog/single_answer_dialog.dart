@@ -88,25 +88,26 @@ class SingleAnswerDialog extends HookWidget {
                     singleAnswerDialogHeader ?? s.singleAnswerDialogHeader,
                     style: headerStyle,
                   ),
-                  const SizedBox(
-                    height: 24,
-                  ),
+                  const SizedBox(height: 24),
                   PrimaryButton(
-                    label: singleAnswerDialogPositiveButton ??
+                    label:
+                        singleAnswerDialogPositiveButton ??
                         s.singleAnswerDialogPositiveButton,
                     onPressed: () =>
                         answerCubit.handleOptionSelection(RateOptions.yes),
                   ),
                   const SizedBox(height: 8),
                   SecondaryButton(
-                    label: singleAnswerDialogNegativeButton ??
+                    label:
+                        singleAnswerDialogNegativeButton ??
                         s.singleAnswerDialogNegativeButton,
                     onPressed: () =>
                         answerCubit.handleOptionSelection(RateOptions.no),
                   ),
                   const SizedBox(height: 8),
                   SecondaryButton(
-                    label: singleAnswerDialogCancelButton ??
+                    label:
+                        singleAnswerDialogCancelButton ??
                         s.singleAnswerDialogCancelButton,
                     onPressed: () =>
                         answerCubit.handleOptionSelection(RateOptions.later),
@@ -151,15 +152,12 @@ class NotSatisfiedStep extends StatelessWidget {
                 s.singleAnswerDialogMoreInfoHeader,
             style: headerStyle,
           ),
-          const SizedBox(
-            height: 24,
-          ),
-          FeedbackTextField(
-            textController: textFieldController,
-          ),
+          const SizedBox(height: 24),
+          FeedbackTextField(textController: textFieldController),
           const SizedBox(height: 24),
           PrimaryButton(
-            label: singleAnswerDialogMoreInfoPrimaryButton ??
+            label:
+                singleAnswerDialogMoreInfoPrimaryButton ??
                 s.singleAnswerDialogMoreInfoPrimaryButton,
             onPressed: () {
               answerCubit.submitWithAdditionalInfo(textFieldController.text);
@@ -167,7 +165,8 @@ class NotSatisfiedStep extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           SecondaryButton(
-            label: singleAnswerDialogMoreInfoSecondaryButton ??
+            label:
+                singleAnswerDialogMoreInfoSecondaryButton ??
                 s.singleAnswerDialogMoreInfoSecondaryButton,
             onPressed: Navigator.of(context).pop,
           ),

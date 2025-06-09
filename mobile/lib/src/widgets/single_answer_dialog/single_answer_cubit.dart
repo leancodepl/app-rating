@@ -74,11 +74,7 @@ class AnswerState with EquatableMixin {
   final bool expanded;
   final bool rateUs;
 
-  AnswerState copyWith({
-    bool? inProgress,
-    bool? expanded,
-    bool? rateUs,
-  }) =>
+  AnswerState copyWith({bool? inProgress, bool? expanded, bool? rateUs}) =>
       AnswerState(
         inProgress: inProgress ?? this.inProgress,
         expanded: expanded ?? this.expanded,

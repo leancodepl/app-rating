@@ -66,9 +66,9 @@ class SimpleRateStarDialog extends HookWidget {
       ),
       secondaryButtonBuilder: (context, {required onPressed}) =>
           SecondaryButton(
-        label: starDialogSecondaryButton ?? s.starDialogSecondaryButton,
-        onPressed: Navigator.of(context).pop,
-      ),
+            label: starDialogSecondaryButton ?? s.starDialogSecondaryButton,
+            onPressed: Navigator.of(context).pop,
+          ),
       ratedHeaderBuilder: (context, rating) => Text(
         starDialogRateUsHeader ?? s.starDialogRateUsHeader,
         softWrap: true,
@@ -81,16 +81,18 @@ class SimpleRateStarDialog extends HookWidget {
       ),
       ratedPrimaryButtonBuilder: (context, rating, {required onPressed}) =>
           PrimaryButton(
-        label: starDialogOpenStoreButton ??
-            s.starDialogOpenStoreButton(getStoreName),
-        onPressed: onPressed,
-      ),
+            label:
+                starDialogOpenStoreButton ??
+                s.starDialogOpenStoreButton(getStoreName),
+            onPressed: onPressed,
+          ),
       ratedSecondaryButtonBuilder: (context, rating, {required onPressed}) =>
           SecondaryButton(
-        label:
-            starDialogOpenStoreCloseButton ?? s.starDialogOpenStoreCloseButton,
-        onPressed: Navigator.of(context).pop,
-      ),
+            label:
+                starDialogOpenStoreCloseButton ??
+                s.starDialogOpenStoreCloseButton,
+            onPressed: Navigator.of(context).pop,
+          ),
       additionalCommentBuilder: (context, controller) =>
           FeedbackTextField(textController: controller),
       ratingBuilder: (context, {required onChanged}) {
@@ -107,10 +109,7 @@ class SimpleRateStarDialog extends HookWidget {
 }
 
 class _RatingStars extends StatelessWidget {
-  const _RatingStars({
-    required this.value,
-    required this.onChanged,
-  });
+  const _RatingStars({required this.value, required this.onChanged});
 
   final ValueChanged<int> onChanged;
   final int value;
@@ -129,20 +128,17 @@ class _RatingStars extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        _starsCount,
-        (index) {
-          return GestureDetector(
-            onTap: () => onChanged(index + 1),
-            child: Padding(
-              padding: index < _starsCount - 1
-                  ? const EdgeInsets.only(right: 24)
-                  : EdgeInsets.zero,
-              child: value > index ? selectedStar : unSelectedStar,
-            ),
-          );
-        },
-      ),
+      children: List.generate(_starsCount, (index) {
+        return GestureDetector(
+          onTap: () => onChanged(index + 1),
+          child: Padding(
+            padding: index < _starsCount - 1
+                ? const EdgeInsets.only(right: 24)
+                : EdgeInsets.zero,
+            child: value > index ? selectedStar : unSelectedStar,
+          ),
+        );
+      }),
     );
   }
 }

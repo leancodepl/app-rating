@@ -63,13 +63,15 @@ import 'app_localizations_pl.dart';
 /// property.
 abstract class AppRatingLocalizations {
   AppRatingLocalizations(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
   static AppRatingLocalizations of(BuildContext context) {
     return Localizations.of<AppRatingLocalizations>(
-        context, AppRatingLocalizations)!;
+      context,
+      AppRatingLocalizations,
+    )!;
   }
 
   static const LocalizationsDelegate<AppRatingLocalizations> delegate =
@@ -87,16 +89,16 @@ abstract class AppRatingLocalizations {
   /// of delegates is preferred or required.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
       <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
-    Locale('pl')
+    Locale('pl'),
   ];
 
   /// No description provided for @starDialogHeader.
@@ -203,7 +205,8 @@ class _AppRatingLocalizationsDelegate
   @override
   Future<AppRatingLocalizations> load(Locale locale) {
     return SynchronousFuture<AppRatingLocalizations>(
-        lookupAppRatingLocalizations(locale));
+      lookupAppRatingLocalizations(locale),
+    );
   }
 
   @override
@@ -224,8 +227,9 @@ AppRatingLocalizations lookupAppRatingLocalizations(Locale locale) {
   }
 
   throw FlutterError(
-      'AppRatingLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'AppRatingLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
 }

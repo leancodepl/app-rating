@@ -25,9 +25,7 @@ class RatingCubit extends Cubit<RatingState>
   }
 
   void openStore() {
-    inAppReview.openStoreListing(
-      appStoreId: appStoreId,
-    );
+    inAppReview.openStoreListing(appStoreId: appStoreId);
 
     emitPresentation(const CloseDialogEvent());
   }
@@ -61,11 +59,7 @@ class RatingState with EquatableMixin {
   final bool expanded;
   final bool rated;
 
-  RatingState copyWith({
-    int? rating,
-    bool? expanded,
-    bool? rated,
-  }) =>
+  RatingState copyWith({int? rating, bool? expanded, bool? rated}) =>
       RatingState(
         rating: rating ?? this.rating,
         expanded: expanded ?? this.expanded,
