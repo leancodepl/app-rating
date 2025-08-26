@@ -119,10 +119,10 @@ class _RatingStars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const selectedStar = Image(
-      image: AssetImage('packages/app_rating/assets/star-selected.png'),
+      image: AssetImage('packages/leancode_app_rating/assets/star-selected.png'),
     );
     const unSelectedStar = Image(
-      image: AssetImage('packages/app_rating/assets/star-unselected.png'),
+      image: AssetImage('packages/leancode_app_rating/assets/star-unselected.png'),
     );
 
     return Row(
