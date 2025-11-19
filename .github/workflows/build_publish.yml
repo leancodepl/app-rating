@@ -34,7 +34,7 @@ jobs:
         ports:
           - "5432:5432"
     env:
-      DOTNET_VERSION: 9.0
+      DOTNET_VERSION: 10.0
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
     steps:
@@ -47,7 +47,7 @@ jobs:
           if [[ $BRANCH == "main" ]]
           then
             BUILD_NUMBER=$GITHUB_RUN_NUMBER
-            VERSION="2.0.${BUILD_NUMBER}"
+            VERSION="3.0.${BUILD_NUMBER}"
             PUBLISH_ARTIFACTS=1
           else
             VERSION="0.0.0"

@@ -8,7 +8,7 @@ public class SendGridRazorClientMock : SendGridRazorClient
     public int SentEmailsCount { get; private set; }
 
     public SendGridRazorClientMock()
-        : base(default!, default!, default!)
+        : base(default!, default!, default!, default!)
     {
         SentEmailsCount = 0;
     }

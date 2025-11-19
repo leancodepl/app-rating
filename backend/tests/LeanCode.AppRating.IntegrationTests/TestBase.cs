@@ -3,7 +3,7 @@ using System.Text.Json;
 using LeanCode.AppRating.IntegrationTests.App;
 using LeanCode.CQRS.RemoteHttp.Client;
 using LeanCode.IntegrationTestHelpers;
-using LeanCode.Logging;
+using LeanCode.Logging.AspNetCore;
 using LeanCode.Startup.MicrosoftDI;
 using Microsoft.Extensions.Hosting;
 using Xunit;
@@ -20,7 +20,7 @@ public abstract class TestsBase<TApp> : IAsyncLifetime, IDisposable
         App = new();
     }
 
-    Task IAsyncLifetime.InitializeAsync() => App.InitializeAsync();
+    Task IAsyncLifetime.InitializeAsync() => App.InitializeAsync().AsTask();
 
     Task IAsyncLifetime.DisposeAsync() => App.DisposeAsync().AsTask();
 
@@ -37,7 +37,8 @@ public class TestApp : LeanCodeTestFactory<App.Startup>
 
     protected JsonSerializerOptions JsonSerializerOptions { get; } = new() { };
 
-    protected override ConfigurationOverrides Configuration => TestDatabaseConfig.Create().GetConfigurationOverrides();
+    protected override TestConnectionString ConnectionStringConfig =>
+        TestDatabaseConfig.Create().GetTestConnectionString();
 
     public TestApp()
     {
