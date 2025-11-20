@@ -12,7 +12,7 @@ public abstract class TestDatabaseConfig
     public const string ConfigEnvName = "AppReviewIntegrationTests__Database";
 
     public abstract SqlDbType DbType { get; }
-    public abstract ConfigurationOverrides GetConfigurationOverrides();
+    public abstract TestConnectionString GetTestConnectionString();
     public abstract void ConfigureDbContext(DbContextOptionsBuilder builder, IConfiguration config);
 
     public static TestDatabaseConfig Create()
@@ -33,8 +33,8 @@ public class SqlServerTestDatabaseConfig : TestDatabaseConfig
 {
     public override SqlDbType DbType => SqlDbType.MsSql;
 
-    public override ConfigurationOverrides GetConfigurationOverrides() =>
-        new("SqlServer__ConnectionStringBase", "SqlServer:ConnectionString");
+    public override TestConnectionString GetTestConnectionString() =>
+        new("SqlServer:ConnectionStringBase", "SqlServer:ConnectionString");
 
     public override void ConfigureDbContext(DbContextOptionsBuilder builder, IConfiguration config)
     {
@@ -46,8 +46,8 @@ public class PostgresTestConfig : TestDatabaseConfig
 {
     public override SqlDbType DbType => SqlDbType.PostgreSql;
 
-    public override ConfigurationOverrides GetConfigurationOverrides() =>
-        new("Postgres__ConnectionStringBase", "Postgres:ConnectionString");
+    public override TestConnectionString GetTestConnectionString() =>
+        new("Postgres:ConnectionStringBase", "Postgres:ConnectionString");
 
     public override void ConfigureDbContext(DbContextOptionsBuilder builder, IConfiguration config)
     {
