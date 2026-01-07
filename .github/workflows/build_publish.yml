@@ -84,36 +84,40 @@ jobs:
       - name: Check formatting
         run: dotnet csharpier . --check
       - name: Build
-        run: dotnet build --no-restore
+        run: dotnet build --no-restore --configuration Release
       - name: Test
-        run: dotnet msbuild -t:RunTests -p:Configuration=Release -p:LogFileName="$PWD/../TestResults/tests.trx"
-        working-directory: ./backend/tests
+        run: dotnet test --project ./tests/LeanCode.AppRating.Tests/LeanCode.AppRating.Tests.csproj --no-build --configuration Release
       - name: Integration Test SqlServer
-        run: |
-          dotnet test \
-          ./tests/LeanCode.AppRating.IntegrationTests/LeanCode.AppRating.IntegrationTests.csproj \
-          --no-build \
-          --logger "trx;LogFileName=LeanCode.AppRating.IntegrationTests.trx" \
-          --results-directory TestResults
+        run: >
+          dotnet test
+          --project ./tests/LeanCode.AppRating.IntegrationTests/LeanCode.AppRating.IntegrationTests.csproj
+          --no-build
+          --configuration Release
         env:
           AppReviewIntegrationTests__Database: sqlserver
           SqlServer__ConnectionStringBase: Server=localhost,1433;User Id=sa;Password=Passw12#;Encrypt=false
       - name: Integration Test Postgres
-        run: |
-          dotnet test \
-          ./tests/LeanCode.AppRating.IntegrationTests/LeanCode.AppRating.IntegrationTests.csproj \
-          --no-build \
-          --logger "trx;LogFileName=LeanCode.AppRating.IntegrationTests.Postgres.trx" \
-          --results-directory TestResults
+        run: >
+          dotnet test
+          --project ./tests/LeanCode.AppRating.IntegrationTests/LeanCode.AppRating.IntegrationTests.csproj
+          --no-build
+          --configuration Release
         env:
           AppReviewIntegrationTests__Database: postgres
           Postgres__ConnectionStringBase: Host=localhost;Username=postgres;Password=Passw12#
+      - name: Process test results
+        if: always()
+        run: |
+          # Strip BOM from JSON files
+          find TestResults -name '*.json' | xargs -n 1 sed -i "$(printf '1s/^\357\273\277//')"
+          # Merge coverage XML files
+          dotnet coverage merge TestResults/*.xml -o TestResults/cobertura.xml -f cobertura
       - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test_results.zip
-          path: backend/TestResults/*.trx
+          name: test_results
+          path: backend/TestResults/*.json
       - name: Pack AppRating Contracts
         if: ${{ steps.version.outputs.publish_artifacts == '1' }}
         env:
@@ -165,16 +169,17 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: artifacts
-      - name: Extract Artifacts
-        run: |
-          for file in artifacts/*.zip; do
-            if [[ -f "$file" ]]; then
-              dir="${file%.zip}"
-              mkdir -p "$dir"
-              unzip -d "$dir" "$file"
-            fi
-          done
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
+        uses: ctrf-io/github-test-reporter@v1
+        if: always()
         with:
-          trx_files: "artifacts/*/**/*.trx"
+          report-path: 'artifacts/**/*.json'
+          summary-report: true
+          failed-folded-report: true
+          skipped-report: true
+          annotate: true
+          pull-request: true
+          overwrite-comment: true
+          comment-tag: '${{ github.workflow }}-${{ github.job }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

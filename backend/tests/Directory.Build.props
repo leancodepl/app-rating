@@ -1,0 +1,26 @@
+<Project>
+  <Import
+    Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))"
+    Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../')))"
+  />
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <OutputType>Exe</OutputType>
+    <NoWarn>$(NoWarn);xUnit1051</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+    <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+    <!-- All arguments must be on a single line to avoid parsing issues with newlines -->
+    <!-- csharpier-ignore -->
+    <TestingPlatformCommandLineArguments>$(TestingPlatformCommandLineArguments) --report-ctrf --coverage --ignore-exit-code 8 --results-directory $(MSBuildThisFileDirectory)/../TestResults --coverage-output-format cobertura --coverage-settings $(MSBuildThisFileDirectory)/coverage.xml --report-ctrf-filename $(MSBuildProjectName)-$([System.DateTime]::Now.ToString("HH-mm-ss")).json --coverage-output $(MSBuildProjectName)-$([System.DateTime]::Now.ToString("HH-mm-ss")).xml</TestingPlatformCommandLineArguments>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
+    <PackageReference Include="xunit.analyzers" />
+    <PackageReference Include="xunit.v3.mtp-v2" />
+  </ItemGroup>
+</Project>

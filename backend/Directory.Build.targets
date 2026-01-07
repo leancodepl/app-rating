@@ -33,11 +33,11 @@
       <PackageReference Update="LeanCode.IntegrationTestHelpers" Version="$(CoreLibVersion)" />
       <PackageReference Update="LeanCode.Startup.MicrosoftDI" Version="$(CoreLibVersion)" />
       <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EFCoreVersion)" />
-      <PackageReference Update="Microsoft.NET.Test.Sdk" Version="18.0.1"/>
+      <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="18.1.0" />
       <PackageReference Update="NSubstitute" Version="5.3.0" />
-      <PackageReference Update="xunit" Version="2.9.3" />
       <PackageReference Update="xunit.runner.visualstudio" Version="3.1.5" />
-      <PackageReference Update="coverlet.collector" Version="6.0.4" />
+      <PackageReference Update="xunit.analyzers" Version="1.25.0" />
+      <PackageReference Update="xunit.v3.mtp-v2" Version="3.2.0" />
   </ItemGroup>
 
   <ItemGroup>

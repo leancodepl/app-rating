@@ -20,9 +20,9 @@ public abstract class TestsBase<TApp> : IAsyncLifetime, IDisposable
         App = new();
     }
 
-    Task IAsyncLifetime.InitializeAsync() => App.InitializeAsync().AsTask();
+    ValueTask IAsyncLifetime.InitializeAsync() => App.InitializeAsync();
 
-    Task IAsyncLifetime.DisposeAsync() => App.DisposeAsync().AsTask();
+    ValueTask IAsyncDisposable.DisposeAsync() => App.DisposeAsync();
 
     void IDisposable.Dispose() => App.Dispose();
 }
@@ -55,7 +55,7 @@ public class TestApp : LeanCodeTestFactory<App.Startup>
     {
         return new ClaimsPrincipal(
             new ClaimsIdentity(
-                new Claim[] { new(KnownClaims.UserId, userId.ToString()), new(KnownClaims.Role, Roles.User), },
+                new Claim[] { new(KnownClaims.UserId, userId.ToString()), new(KnownClaims.Role, Roles.User) },
                 TestAuthenticationHandler.SchemeName,
                 KnownClaims.UserId,
                 KnownClaims.Role
