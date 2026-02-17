@@ -1,3 +1,7 @@
+<a href="https://leancode.co/?utm_source=github.com&utm_medium=referral&utm_campaign=app-rating" align="center">
+  <img alt="leancode_app_rating" src="https://github.com/user-attachments/assets/6fc6c0bf-576c-45ea-87b0-9bc51df8f4c7" />
+</a>
+
 # leancode_app_rating
 
 [![pub.dev badge][pub-badge]][pub-badge-link]
@@ -98,3 +102,34 @@ To replicate the behavior of the showStarDialog function, ensure that you call t
 [leancode_app_rating-build-badge]: https://img.shields.io/github/actions/workflow/status/leancodepl/app-rating/leancode_app_rating-test.yml?branch=main
 
 [leancode_app_rating-build-badge-link]: https://github.com/leancodepl/app-rating/actions/workflows/leancode_app_rating-test.yml
+
+---
+
+## 🛠️ Maintained by LeanCode
+
+<div align="center">
+  <a href="https://leancode.co/?utm_source=github.com&utm_medium=referral&utm_campaign=app-rating">
+    <img src="https://leancodepublic.blob.core.windows.net/public/wide.png" alt="LeanCode Logo" height="100" />
+  </a>
+</div>
+
+This package is built with 💙 by **[LeanCode](https://leancode.co?utm_source=github.com&utm_medium=referral&utm_campaign=app-rating)**.
+We are **top-tier experts** focused on Flutter Enterprise solutions.
+
+### Why LeanCode?
+
+- **Creators of [Patrol](https://patrol.leancode.co/?utm_source=github.com&utm_medium=referral&utm_campaign=app-rating)** – the next-gen testing framework for Flutter.
+
+- **Production-Ready** – We use this package in apps with millions of users.
+- **Full-Cycle Product Development** – We take your product from scratch to long-term maintenance.
+
+<div align="center">
+  <br />
+
+  **Need help with your Flutter project?**
+
+  [**👉 Hire our team**](https://leancode.co/get-estimate?utm_source=github.com&utm_medium=referral&utm_campaign=app-rating)
+  &nbsp;&nbsp;•&nbsp;&nbsp;
+  [Check our other packages](https://pub.dev/packages?q=publisher%3Aleancode.co&sort=downloads)
+
+</div>
