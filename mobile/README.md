@@ -1,6 +1,8 @@
-<a href="https://leancode.co/?utm_source=github.com&utm_medium=referral&utm_campaign=app-rating" align="center">
-  <img alt="leancode_app_rating" src="https://github.com/user-attachments/assets/6fc6c0bf-576c-45ea-87b0-9bc51df8f4c7" />
-</a>
+<div align="center">
+
+[![Banner][banner-img]][leancode-landing]
+
+</div>
 
 # leancode_app_rating
 
@@ -95,30 +97,21 @@ The showCustomizableStarDialog function enables customization of the star rating
 
 To replicate the behavior of the showStarDialog function, ensure that you call the onPressed functions for the button builders. In this flow, all secondary buttons terminate the rating process and close the dialog. The primary buttons have distinct behaviors: the primary button in the first dialog leads the user to the second dialog, while the primary button in the second dialog redirects the user to the app store to submit a review.
 
-[pub-badge]: https://img.shields.io/pub/v/leancode_app_rating.svg?logo=dart
-
-[pub-badge-link]: https://pub.dev/packages/leancode_app_rating
-
-[leancode_app_rating-build-badge]: https://img.shields.io/github/actions/workflow/status/leancodepl/app-rating/leancode_app_rating-test.yml?branch=main
-
-[leancode_app_rating-build-badge-link]: https://github.com/leancodepl/app-rating/actions/workflows/leancode_app_rating-test.yml
-
 ---
 
 ## 🛠️ Maintained by LeanCode
-
 <div align="center">
-  <a href="https://leancode.co/?utm_source=github.com&utm_medium=referral&utm_campaign=app-rating">
-    <img src="https://leancodepublic.blob.core.windows.net/public/wide.png" alt="LeanCode Logo" height="100" />
-  </a>
+
+  [<img src="https://leancodepublic.blob.core.windows.net/public/wide.png" alt="LeanCode Logo" height="100" />][leancode-landing]
+
 </div>
 
-This package is built with 💙 by **[LeanCode](https://leancode.co?utm_source=github.com&utm_medium=referral&utm_campaign=app-rating)**.
+This package is built with 💙 by **[LeanCode][leancode-landing]**.
 We are **top-tier experts** focused on Flutter Enterprise solutions.
 
 ### Why LeanCode?
 
-- **Creators of [Patrol](https://patrol.leancode.co/?utm_source=github.com&utm_medium=referral&utm_campaign=app-rating)** – the next-gen testing framework for Flutter.
+- **Creators of [Patrol][patrol-landing]** – the next-gen testing framework for Flutter.
 
 - **Production-Ready** – We use this package in apps with millions of users.
 - **Full-Cycle Product Development** – We take your product from scratch to long-term maintenance.
@@ -128,8 +121,26 @@ We are **top-tier experts** focused on Flutter Enterprise solutions.
 
   **Need help with your Flutter project?**
 
-  [**👉 Hire our team**](https://leancode.co/get-estimate?utm_source=github.com&utm_medium=referral&utm_campaign=app-rating)
+  [**👉 Hire our team**][leancode-estimate]
   &nbsp;&nbsp;•&nbsp;&nbsp;
-  [Check our other packages](https://pub.dev/packages?q=publisher%3Aleancode.co&sort=downloads)
+  [Check our other packages][leancode-packages]
 
 </div>
+
+[pub-badge]: https://img.shields.io/pub/v/leancode_app_rating.svg?logo=dart
+
+[pub-badge-link]: https://pub.dev/packages/leancode_app_rating
+
+[leancode_app_rating-build-badge]: https://img.shields.io/github/actions/workflow/status/leancodepl/app-rating/leancode_app_rating-test.yml?branch=main
+
+[leancode_app_rating-build-badge-link]: https://github.com/leancodepl/app-rating/actions/workflows/leancode_app_rating-test.yml
+
+[banner-img]: https://raw.githubusercontent.com/leancodepl/app-rating/refs/heads/main/mobile/docs/imgs/banner.png
+
+[leancode-landing]: https://leancode.co/?utm_source=github.com&utm_medium=referral&utm_campaign=app-rating
+
+[leancode-estimate]: https://leancode.co/get-estimate?utm_source=github.com&utm_medium=referral&utm_campaign=app-rating
+
+[leancode-packages]: https://pub.dev/packages?q=publisher%3Aleancode.co&sort=downloads
+
+[patrol-landing]: https://patrol.leancode.co/?utm_source=github.com&utm_medium=referral&utm_campaign=app-rating
