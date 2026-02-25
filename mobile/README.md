@@ -135,7 +135,7 @@ We are **top-tier experts** focused on Flutter Enterprise solutions.
 
 [leancode_app_rating-build-badge-link]: https://github.com/leancodepl/app-rating/actions/workflows/leancode_app_rating-test.yml
 
-[banner-img]: https://raw.githubusercontent.com/leancodepl/app-rating/refs/heads/main/mobile/docs/imgs/banner.png
+[banner-img]: https://raw.githubusercontent.com/leancodepl/app-rating/refs/heads/main/mobile/doc/imgs/banner.png
 
 [leancode-landing]: https://leancode.co/?utm_source=github.com&utm_medium=referral&utm_campaign=app-rating
 
