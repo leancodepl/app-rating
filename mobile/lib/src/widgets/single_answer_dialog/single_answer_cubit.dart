@@ -63,7 +63,7 @@ class SingleAnswerCubit extends Cubit<AnswerState>
   }
 }
 
-class AnswerState with EquatableMixin {
+class AnswerState with Equatable {
   const AnswerState({
     this.inProgress = false,
     this.expanded = false,

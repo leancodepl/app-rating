@@ -12,11 +12,13 @@ enum PlatformDTO {
 
 /// LeanCode.Contracts.Security.AuthorizeWhenHasAnyOfAttribute('RateApp')
 @ContractsSerializable()
-class RatingAlreadySent with EquatableMixin implements Query<bool> {
+class RatingAlreadySent with Equatable implements Query<bool> {
   RatingAlreadySent();
 
   factory RatingAlreadySent.fromJson(Map<String, dynamic> json) =>
       _$RatingAlreadySentFromJson(json);
+
+  static const fullName$ = 'LeanCode.AppRating.Contracts.RatingAlreadySent';
 
   List<Object?> get props => [];
 
@@ -24,11 +26,11 @@ class RatingAlreadySent with EquatableMixin implements Query<bool> {
 
   bool resultFactory(dynamic decodedJson) => decodedJson as bool;
 
-  String getFullName() => 'LeanCode.AppRating.Contracts.RatingAlreadySent';
+  String getFullName() => fullName$;
 }
 
 @ContractsSerializable()
-class RatingPermissions with EquatableMixin {
+class RatingPermissions with Equatable {
   RatingPermissions();
 
   factory RatingPermissions.fromJson(Map<String, dynamic> json) =>
@@ -36,14 +38,16 @@ class RatingPermissions with EquatableMixin {
 
   static const String rateApp = 'RateApp';
 
+  static const fullName$ = 'LeanCode.AppRating.Contracts.RatingPermissions';
+
   List<Object?> get props => [];
 
   Map<String, dynamic> toJson() => _$RatingPermissionsToJson(this);
 }
 
-/// LeanCode.Contracts.Security.AuthorizeWhenHasAnyOfAttribute('RateApp')
+/// LeanCode.Contracts.Security.AllowUnauthorizedAttribute()
 @ContractsSerializable()
-class SubmitAppRating with EquatableMixin implements Command {
+class SubmitAppRating with Equatable implements Command {
   SubmitAppRating({
     required this.rating,
     required this.additionalComment,
@@ -68,6 +72,8 @@ class SubmitAppRating with EquatableMixin implements Command {
 
   final Map<String, Object>? metadata;
 
+  static const fullName$ = 'LeanCode.AppRating.Contracts.SubmitAppRating';
+
   List<Object?> get props => [
     rating,
     additionalComment,
@@ -79,7 +85,7 @@ class SubmitAppRating with EquatableMixin implements Command {
 
   Map<String, dynamic> toJson() => _$SubmitAppRatingToJson(this);
 
-  String getFullName() => 'LeanCode.AppRating.Contracts.SubmitAppRating';
+  String getFullName() => fullName$;
 }
 
 class SubmitAppRatingErrorCodes {

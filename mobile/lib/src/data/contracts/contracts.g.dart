@@ -1,5 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: type=lint
+
 part of 'contracts.dart';
 
 // **************************************************************************
@@ -34,7 +36,7 @@ Map<String, dynamic> _$SubmitAppRatingToJson(SubmitAppRating instance) =>
     <String, dynamic>{
       'Rating': instance.rating,
       'AdditionalComment': instance.additionalComment,
-      'Platform': _$PlatformDTOEnumMap[instance.platform],
+      'Platform': _$PlatformDTOEnumMap[instance.platform]!,
       'SystemVersion': instance.systemVersion,
       'AppVersion': instance.appVersion,
       'Metadata': instance.metadata,

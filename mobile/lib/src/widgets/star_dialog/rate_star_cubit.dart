@@ -48,7 +48,7 @@ class RatingCubit extends Cubit<RatingState>
   }
 }
 
-class RatingState with EquatableMixin {
+class RatingState with Equatable {
   const RatingState({
     this.rating = 0,
     this.expanded = false,
