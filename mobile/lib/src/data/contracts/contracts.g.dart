@@ -3,7 +3,7 @@
 part of 'contracts.dart';
 
 // **************************************************************************
-// JsonSerializableGenerator
+// ContractsSerializableGenerator
 // **************************************************************************
 
 RatingAlreadySent _$RatingAlreadySentFromJson(Map<String, dynamic> json) =>
