@@ -80,8 +80,8 @@ class AppRating {
 
   void showCustomizableStarDialog(
     BuildContext context, {
-    required WidgetBuilder headerBuilder,
-    required WidgetBuilder subtitleBuilder,
+    required RatedWidgetBuilder headerBuilder,
+    required RatedWidgetBuilder subtitleBuilder,
     required ButtonBuilder primaryButtonBuilder,
     required ButtonBuilder secondaryButtonBuilder,
     required RatedWidgetBuilder ratedHeaderBuilder,

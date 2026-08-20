@@ -74,8 +74,8 @@ The showStarDialog function displays a dialog box allowing the user to provide a
 ```dart
  void showCustomizableStarDialog(
 BuildContext context, {
-required WidgetBuilder headerBuilder,
-required WidgetBuilder subtitleBuilder,
+required RatedWidgetBuilder headerBuilder,
+required RatedWidgetBuilder subtitleBuilder,
 required ButtonBuilder primaryButtonBuilder,
 required ButtonBuilder secondaryButtonBuilder,
 required RatedWidgetBuilder ratedHeaderBuilder,
@@ -88,6 +88,8 @@ EdgeInsets padding = EdgeInsets.zero,
 })
 ```
 The showCustomizableStarDialog function enables customization of the star rating flow. Texts, buttons, the text field for additional comments, and the rating widget are all fully customizable.
+
+Every builder of the first dialog receives the currently selected rating, so they can render the selected stars, adjust the header or subtitle, or disable the primary button without keeping a copy of that state.
 
 To replicate the behavior of the showStarDialog function, ensure that you call the onPressed functions for the button builders. In this flow, all secondary buttons terminate the rating process and close the dialog. The primary buttons have distinct behaviors: the primary button in the first dialog leads the user to the second dialog, while the primary button in the second dialog redirects the user to the app store to submit a review.
 
