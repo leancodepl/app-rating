@@ -7,14 +7,19 @@ import 'package:leancode_contracts/leancode_contracts.dart';
 import 'package:leancode_hooks/leancode_hooks.dart';
 
 typedef ButtonBuilder =
-    Widget Function(BuildContext context, {required VoidCallback onPressed});
+    Widget Function(
+      BuildContext context,
+      int rating, {
+      required VoidCallback onPressed,
+    });
 
 typedef TextFieldBuilder =
     Widget Function(BuildContext context, TextEditingController textController);
 
 typedef RatingBuilder =
     Widget Function(
-      BuildContext context, {
+      BuildContext context,
+      int rating, {
       required ValueChanged<int> onChanged,
     });
 
@@ -103,6 +108,7 @@ class RateStarDialog extends HookWidget {
               );
             } else {
               return _NotRatedYet(
+                rating: state.rating,
                 headerBuilder: headerBuilder,
                 subtitleBuilder: subtitleBuilder,
                 ratingBuilder: ratingBuilder,
@@ -123,6 +129,7 @@ class RateStarDialog extends HookWidget {
 
 class _NotRatedYet extends StatelessWidget {
   const _NotRatedYet({
+    required this.rating,
     required this.headerBuilder,
     required this.subtitleBuilder,
     required this.ratingBuilder,
@@ -134,6 +141,7 @@ class _NotRatedYet extends StatelessWidget {
     required this.expanded,
   });
 
+  final int rating;
   final WidgetBuilder headerBuilder;
   final WidgetBuilder subtitleBuilder;
   final RatingBuilder ratingBuilder;
@@ -153,7 +161,7 @@ class _NotRatedYet extends StatelessWidget {
         const SizedBox(height: 8),
         subtitleBuilder(context),
         const SizedBox(height: 24),
-        ratingBuilder(context, onChanged: rateCubit.setRating),
+        ratingBuilder(context, rating, onChanged: rateCubit.setRating),
         const SizedBox(height: 24),
         if (expanded)
           Padding(
@@ -162,12 +170,17 @@ class _NotRatedYet extends StatelessWidget {
           ),
         primaryButtonBuilder(
           context,
+          rating,
           onPressed: () {
             rateCubit.submit(additionalComment: textController.text);
           },
         ),
         const SizedBox(height: 8),
-        secondaryButtonBuilder(context, onPressed: Navigator.of(context).pop),
+        secondaryButtonBuilder(
+          context,
+          rating,
+          onPressed: Navigator.of(context).pop,
+        ),
       ],
     );
   }

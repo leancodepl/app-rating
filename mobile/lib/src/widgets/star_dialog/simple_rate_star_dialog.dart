@@ -8,9 +8,8 @@ import 'package:leancode_app_rating/src/widgets/buttons/secondary_button.dart';
 import 'package:leancode_app_rating/src/widgets/common/feedback_text_field.dart';
 import 'package:leancode_app_rating/src/widgets/common/text_styles.dart';
 import 'package:leancode_app_rating/src/widgets/star_dialog/rate_star_dialog.dart';
-import 'package:leancode_hooks/leancode_hooks.dart';
 
-class SimpleRateStarDialog extends HookWidget {
+class SimpleRateStarDialog extends StatelessWidget {
   const SimpleRateStarDialog({
     super.key,
     required this.cqrs,
@@ -43,7 +42,6 @@ class SimpleRateStarDialog extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final s = AppRatingLocalizations.of(context);
-    final rating = useState(0);
 
     return RateStarDialog(
       cqrs: cqrs,
@@ -60,11 +58,12 @@ class SimpleRateStarDialog extends HookWidget {
         starDialogSubtitle ?? s.starDialogSubtitle,
         style: subtitleTextStyle,
       ),
-      primaryButtonBuilder: (context, {required onPressed}) => PrimaryButton(
-        label: starDialogPrimaryButton ?? s.starDialogPrimaryButton,
-        onPressed: onPressed,
-      ),
-      secondaryButtonBuilder: (context, {required onPressed}) =>
+      primaryButtonBuilder: (context, rating, {required onPressed}) =>
+          PrimaryButton(
+            label: starDialogPrimaryButton ?? s.starDialogPrimaryButton,
+            onPressed: onPressed,
+          ),
+      secondaryButtonBuilder: (context, rating, {required onPressed}) =>
           SecondaryButton(
             label: starDialogSecondaryButton ?? s.starDialogSecondaryButton,
             onPressed: Navigator.of(context).pop,
@@ -95,15 +94,8 @@ class SimpleRateStarDialog extends HookWidget {
           ),
       additionalCommentBuilder: (context, controller) =>
           FeedbackTextField(textController: controller),
-      ratingBuilder: (context, {required onChanged}) {
-        return _RatingStars(
-          value: rating.value,
-          onChanged: (value) {
-            rating.value = value;
-            onChanged(value);
-          },
-        );
-      },
+      ratingBuilder: (context, rating, {required onChanged}) =>
+          _RatingStars(value: rating, onChanged: onChanged),
     );
   }
 }

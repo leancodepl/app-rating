@@ -89,6 +89,8 @@ EdgeInsets padding = EdgeInsets.zero,
 ```
 The showCustomizableStarDialog function enables customization of the star rating flow. Texts, buttons, the text field for additional comments, and the rating widget are all fully customizable.
 
+The rating builder and both button builders of the first dialog receive the currently selected rating, so they can render the selected stars or disable the primary button without keeping a copy of that state.
+
 To replicate the behavior of the showStarDialog function, ensure that you call the onPressed functions for the button builders. In this flow, all secondary buttons terminate the rating process and close the dialog. The primary buttons have distinct behaviors: the primary button in the first dialog leads the user to the second dialog, while the primary button in the second dialog redirects the user to the app store to submit a review.
 
 [pub-badge]: https://img.shields.io/pub/v/leancode_app_rating.svg?logo=dart
