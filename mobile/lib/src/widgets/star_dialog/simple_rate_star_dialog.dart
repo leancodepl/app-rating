@@ -49,21 +49,20 @@ class SimpleRateStarDialog extends StatelessWidget {
       appleStoreId: appleStoreId,
       appVersion: appVersion,
       padding: const EdgeInsets.all(24),
-      headerBuilder: (context, rating) => Text(
+      headerBuilder: (context, _) => Text(
         starDialogHeader ?? s.starDialogHeader,
         softWrap: true,
         style: headerStyle,
       ),
-      subtitleBuilder: (context, rating) => Text(
+      subtitleBuilder: (context, _) => Text(
         starDialogSubtitle ?? s.starDialogSubtitle,
         style: subtitleTextStyle,
       ),
-      primaryButtonBuilder: (context, rating, {required onPressed}) =>
-          PrimaryButton(
-            label: starDialogPrimaryButton ?? s.starDialogPrimaryButton,
-            onPressed: onPressed,
-          ),
-      secondaryButtonBuilder: (context, rating, {required onPressed}) =>
+      primaryButtonBuilder: (context, _, {required onPressed}) => PrimaryButton(
+        label: starDialogPrimaryButton ?? s.starDialogPrimaryButton,
+        onPressed: onPressed,
+      ),
+      secondaryButtonBuilder: (context, _, {required onPressed}) =>
           SecondaryButton(
             label: starDialogSecondaryButton ?? s.starDialogSecondaryButton,
             onPressed: Navigator.of(context).pop,
@@ -92,9 +91,9 @@ class SimpleRateStarDialog extends StatelessWidget {
                 s.starDialogOpenStoreCloseButton,
             onPressed: Navigator.of(context).pop,
           ),
-      additionalCommentBuilder: (context, rating, controller) =>
+      additionalCommentBuilder: (_, _, controller) =>
           FeedbackTextField(textController: controller),
-      ratingBuilder: (context, rating, {required onChanged}) =>
+      ratingBuilder: (_, rating, {required onChanged}) =>
           _RatingStars(value: rating, onChanged: onChanged),
     );
   }
