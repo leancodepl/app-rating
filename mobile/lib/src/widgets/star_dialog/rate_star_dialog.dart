@@ -14,7 +14,11 @@ typedef ButtonBuilder =
     });
 
 typedef TextFieldBuilder =
-    Widget Function(BuildContext context, TextEditingController textController);
+    Widget Function(
+      BuildContext context,
+      int rating,
+      TextEditingController textController,
+    );
 
 typedef RatingBuilder =
     Widget Function(
@@ -56,8 +60,8 @@ class RateStarDialog extends HookWidget {
   final InAppReview inAppReview;
   final String appleStoreId;
   final String appVersion;
-  final WidgetBuilder headerBuilder;
-  final WidgetBuilder subtitleBuilder;
+  final RatedWidgetBuilder headerBuilder;
+  final RatedWidgetBuilder subtitleBuilder;
   final ButtonBuilder primaryButtonBuilder;
   final ButtonBuilder secondaryButtonBuilder;
   final RatedWidgetBuilder ratedHeaderBuilder;
@@ -142,8 +146,8 @@ class _NotRatedYet extends StatelessWidget {
   });
 
   final int rating;
-  final WidgetBuilder headerBuilder;
-  final WidgetBuilder subtitleBuilder;
+  final RatedWidgetBuilder headerBuilder;
+  final RatedWidgetBuilder subtitleBuilder;
   final RatingBuilder ratingBuilder;
   final RatingCubit rateCubit;
   final TextFieldBuilder additionalCommentBuilder;
@@ -157,16 +161,16 @@ class _NotRatedYet extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        headerBuilder(context),
+        headerBuilder(context, rating),
         const SizedBox(height: 8),
-        subtitleBuilder(context),
+        subtitleBuilder(context, rating),
         const SizedBox(height: 24),
         ratingBuilder(context, rating, onChanged: rateCubit.setRating),
         const SizedBox(height: 24),
         if (expanded)
           Padding(
             padding: const EdgeInsets.only(bottom: 24),
-            child: additionalCommentBuilder(context, textController),
+            child: additionalCommentBuilder(context, rating, textController),
           ),
         primaryButtonBuilder(
           context,

@@ -49,12 +49,12 @@ class SimpleRateStarDialog extends StatelessWidget {
       appleStoreId: appleStoreId,
       appVersion: appVersion,
       padding: const EdgeInsets.all(24),
-      headerBuilder: (context) => Text(
+      headerBuilder: (context, rating) => Text(
         starDialogHeader ?? s.starDialogHeader,
         softWrap: true,
         style: headerStyle,
       ),
-      subtitleBuilder: (context) => Text(
+      subtitleBuilder: (context, rating) => Text(
         starDialogSubtitle ?? s.starDialogSubtitle,
         style: subtitleTextStyle,
       ),
@@ -92,7 +92,7 @@ class SimpleRateStarDialog extends StatelessWidget {
                 s.starDialogOpenStoreCloseButton,
             onPressed: Navigator.of(context).pop,
           ),
-      additionalCommentBuilder: (context, controller) =>
+      additionalCommentBuilder: (context, rating, controller) =>
           FeedbackTextField(textController: controller),
       ratingBuilder: (context, rating, {required onChanged}) =>
           _RatingStars(value: rating, onChanged: onChanged),
