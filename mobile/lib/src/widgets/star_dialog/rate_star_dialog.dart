@@ -7,14 +7,23 @@ import 'package:leancode_contracts/leancode_contracts.dart';
 import 'package:leancode_hooks/leancode_hooks.dart';
 
 typedef ButtonBuilder =
-    Widget Function(BuildContext context, {required VoidCallback onPressed});
+    Widget Function(
+      BuildContext context,
+      int rating, {
+      required VoidCallback onPressed,
+    });
 
 typedef TextFieldBuilder =
-    Widget Function(BuildContext context, TextEditingController textController);
+    Widget Function(
+      BuildContext context,
+      int rating,
+      TextEditingController textController,
+    );
 
 typedef RatingBuilder =
     Widget Function(
-      BuildContext context, {
+      BuildContext context,
+      int rating, {
       required ValueChanged<int> onChanged,
     });
 
@@ -51,8 +60,8 @@ class RateStarDialog extends HookWidget {
   final InAppReview inAppReview;
   final String appleStoreId;
   final String appVersion;
-  final WidgetBuilder headerBuilder;
-  final WidgetBuilder subtitleBuilder;
+  final RatedWidgetBuilder headerBuilder;
+  final RatedWidgetBuilder subtitleBuilder;
   final ButtonBuilder primaryButtonBuilder;
   final ButtonBuilder secondaryButtonBuilder;
   final RatedWidgetBuilder ratedHeaderBuilder;
@@ -103,6 +112,7 @@ class RateStarDialog extends HookWidget {
               );
             } else {
               return _NotRatedYet(
+                rating: state.rating,
                 headerBuilder: headerBuilder,
                 subtitleBuilder: subtitleBuilder,
                 ratingBuilder: ratingBuilder,
@@ -123,6 +133,7 @@ class RateStarDialog extends HookWidget {
 
 class _NotRatedYet extends StatelessWidget {
   const _NotRatedYet({
+    required this.rating,
     required this.headerBuilder,
     required this.subtitleBuilder,
     required this.ratingBuilder,
@@ -134,8 +145,9 @@ class _NotRatedYet extends StatelessWidget {
     required this.expanded,
   });
 
-  final WidgetBuilder headerBuilder;
-  final WidgetBuilder subtitleBuilder;
+  final int rating;
+  final RatedWidgetBuilder headerBuilder;
+  final RatedWidgetBuilder subtitleBuilder;
   final RatingBuilder ratingBuilder;
   final RatingCubit rateCubit;
   final TextFieldBuilder additionalCommentBuilder;
@@ -149,25 +161,30 @@ class _NotRatedYet extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        headerBuilder(context),
+        headerBuilder(context, rating),
         const SizedBox(height: 8),
-        subtitleBuilder(context),
+        subtitleBuilder(context, rating),
         const SizedBox(height: 24),
-        ratingBuilder(context, onChanged: rateCubit.setRating),
+        ratingBuilder(context, rating, onChanged: rateCubit.setRating),
         const SizedBox(height: 24),
         if (expanded)
           Padding(
             padding: const EdgeInsets.only(bottom: 24),
-            child: additionalCommentBuilder(context, textController),
+            child: additionalCommentBuilder(context, rating, textController),
           ),
         primaryButtonBuilder(
           context,
+          rating,
           onPressed: () {
             rateCubit.submit(additionalComment: textController.text);
           },
         ),
         const SizedBox(height: 8),
-        secondaryButtonBuilder(context, onPressed: Navigator.of(context).pop),
+        secondaryButtonBuilder(
+          context,
+          rating,
+          onPressed: Navigator.of(context).pop,
+        ),
       ],
     );
   }
