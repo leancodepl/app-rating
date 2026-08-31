@@ -27,6 +27,7 @@ class AppRating {
     String? starDialogRateUsSubtitle,
     String? starDialogOpenStoreButton,
     String? starDialogOpenStoreCloseButton,
+    Color? backgroundColor,
   }) {
     showDialog<void>(
       context: context,
@@ -44,6 +45,7 @@ class AppRating {
         starDialogRateUsSubtitle: starDialogRateUsSubtitle,
         starDialogOpenStoreButton: starDialogOpenStoreButton,
         starDialogOpenStoreCloseButton: starDialogOpenStoreCloseButton,
+        backgroundColor: backgroundColor,
       ),
     );
   }
@@ -57,6 +59,7 @@ class AppRating {
     String? singleAnswerDialogMoreInfoHeader,
     String? singleAnswerDialogMoreInfoPrimaryButton,
     String? singleAnswerDialogMoreInfoSecondaryButton,
+    Color? backgroundColor,
   }) {
     showDialog<void>(
       context: context,
@@ -74,6 +77,7 @@ class AppRating {
             singleAnswerDialogMoreInfoPrimaryButton,
         singleAnswerDialogMoreInfoSecondaryButton:
             singleAnswerDialogMoreInfoSecondaryButton,
+        backgroundColor: backgroundColor,
       ),
     );
   }
@@ -91,6 +95,7 @@ class AppRating {
     required TextFieldBuilder additionalCommentBuilder,
     required RatingBuilder ratingBuilder,
     EdgeInsets padding = EdgeInsets.zero,
+    Color? backgroundColor,
   }) {
     showDialog<void>(
       context: context,
@@ -111,6 +116,7 @@ class AppRating {
         additionalCommentBuilder: additionalCommentBuilder,
         ratingBuilder: ratingBuilder,
         padding: padding,
+        backgroundColor: backgroundColor,
       ),
     );
   }

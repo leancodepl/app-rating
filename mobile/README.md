@@ -46,6 +46,7 @@ void showSingleAnswerDialog(
   String? singleAnswerDialogMoreInfoHeader,
   String? singleAnswerDialogMoreInfoPrimaryButton,
   String? singleAnswerDialogMoreInfoSecondaryButton,
+  Color? backgroundColor,
 })
 ```
 
@@ -70,6 +71,7 @@ void showStarDialog(
   String? starDialogRateUsSubtitle,
   String? starDialogOpenStoreButton,
   String? starDialogOpenStoreCloseButton,
+  Color? backgroundColor,
 })
 ```
 
@@ -91,9 +93,12 @@ required RatedButtonBuilder ratedSecondaryButtonBuilder,
 required TextFieldBuilder additionalCommentBuilder,
 required RatingBuilder ratingBuilder,
 EdgeInsets padding = EdgeInsets.zero,
+Color? backgroundColor,
 })
 ```
 The showCustomizableStarDialog function enables customization of the star rating flow. Texts, buttons, the text field for additional comments, and the rating widget are all fully customizable.
+
+Every dialog paints itself with `backgroundColor`, falling back to `DialogThemeData.backgroundColor` when it is not given, so a dialog can be kept off the Material 3 `surfaceContainerHigh` default without bending the app's color scheme.
 
 Every builder of the first dialog receives the currently selected rating, so they can render the selected stars, adjust the header or subtitle, or disable the primary button without keeping a copy of that state.
 

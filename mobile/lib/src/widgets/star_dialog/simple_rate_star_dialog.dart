@@ -24,6 +24,7 @@ class SimpleRateStarDialog extends StatelessWidget {
     this.starDialogRateUsSubtitle,
     this.starDialogOpenStoreButton,
     this.starDialogOpenStoreCloseButton,
+    this.backgroundColor,
   });
 
   final Cqrs cqrs;
@@ -39,6 +40,10 @@ class SimpleRateStarDialog extends StatelessWidget {
   final String? starDialogOpenStoreButton;
   final String? starDialogOpenStoreCloseButton;
 
+  /// The dialog's background color. Defaults to the dialog theme's background
+  /// color.
+  final Color? backgroundColor;
+
   @override
   Widget build(BuildContext context) {
     final s = AppRatingLocalizations.of(context);
@@ -49,6 +54,7 @@ class SimpleRateStarDialog extends StatelessWidget {
       appleStoreId: appleStoreId,
       appVersion: appVersion,
       padding: const EdgeInsets.all(24),
+      backgroundColor: backgroundColor,
       headerBuilder: (context, _) => Text(
         starDialogHeader ?? s.starDialogHeader,
         softWrap: true,
@@ -110,10 +116,14 @@ class _RatingStars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const selectedStar = Image(
-      image: AssetImage('packages/leancode_app_rating/assets/star-selected.png'),
+      image: AssetImage(
+        'packages/leancode_app_rating/assets/star-selected.png',
+      ),
     );
     const unSelectedStar = Image(
-      image: AssetImage('packages/leancode_app_rating/assets/star-unselected.png'),
+      image: AssetImage(
+        'packages/leancode_app_rating/assets/star-unselected.png',
+      ),
     );
 
     return Row(

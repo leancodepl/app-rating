@@ -54,6 +54,7 @@ class RateStarDialog extends HookWidget {
     required this.additionalCommentBuilder,
     required this.ratingBuilder,
     required this.padding,
+    this.backgroundColor,
   });
 
   final Cqrs cqrs;
@@ -71,6 +72,10 @@ class RateStarDialog extends HookWidget {
   final TextFieldBuilder additionalCommentBuilder;
   final RatingBuilder ratingBuilder;
   final EdgeInsets padding;
+
+  /// The dialog's background color. Defaults to
+  /// [DialogThemeData.backgroundColor].
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +101,7 @@ class RateStarDialog extends HookWidget {
     final textController = useTextEditingController();
 
     return BaseDialog(
+      backgroundColor: backgroundColor,
       child: Padding(
         padding: padding,
         child: BlocBuilder<RatingCubit, RatingState>(

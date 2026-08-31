@@ -26,6 +26,7 @@ class SingleAnswerDialog extends HookWidget {
     this.singleAnswerDialogMoreInfoHeader,
     this.singleAnswerDialogMoreInfoPrimaryButton,
     this.singleAnswerDialogMoreInfoSecondaryButton,
+    this.backgroundColor,
   });
 
   final Cqrs cqrs;
@@ -38,6 +39,10 @@ class SingleAnswerDialog extends HookWidget {
   final String? singleAnswerDialogMoreInfoHeader;
   final String? singleAnswerDialogMoreInfoPrimaryButton;
   final String? singleAnswerDialogMoreInfoSecondaryButton;
+
+  /// The dialog's background color. Defaults to
+  /// [DialogThemeData.backgroundColor].
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +67,7 @@ class SingleAnswerDialog extends HookWidget {
     );
 
     return BaseDialog(
+      backgroundColor: backgroundColor,
       child: BlocBuilder<SingleAnswerCubit, AnswerState>(
         bloc: answerCubit,
         builder: (context, state) {

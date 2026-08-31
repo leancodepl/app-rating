@@ -1,3 +1,7 @@
+## 0.0.10
+
+Every dialog now takes an optional `backgroundColor`, exposed on `showStarDialog`, `showSingleAnswerDialog` and `showCustomizableStarDialog`. It defaults to `DialogThemeData.backgroundColor`, so apps that want a background other than the Material 3 `surfaceContainerHigh` default no longer have to bend their color scheme.
+
 ## 0.0.9
 
 All six builders of the star dialog's first step now receive the currently selected rating, so neither your code nor `SimpleRateStarDialog` has to keep a copy of it. **Breaking:** each of them takes an extra positional `int`, `TextFieldBuilder` takes it before the controller, and `headerBuilder`/`subtitleBuilder` are now `RatedWidgetBuilder`s.
