@@ -24,6 +24,7 @@
     <PackageReference Update="Microsoft.EntityFrameworkCore" Version="$(EFCoreVersion)" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="$(EFCoreVersion)" />
     <PackageReference Update="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+    <PackageReference Update="OpenTelemetry.Api" Version="1.15.3" />
     <PackageReference Update="Serilog" Version="4.3.0" />
   </ItemGroup>
 
